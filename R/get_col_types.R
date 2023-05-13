@@ -16,7 +16,6 @@
 #' @return `tibble` of columns matching `type` (empty `tibble` is no columns
 #' of specified type
 #' exist)
-#' @export get_col_type_tbl
 #'
 #' @importFrom cli cli_abort cli_alert_info
 #' @importFrom dplyr select where

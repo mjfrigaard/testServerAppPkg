@@ -4,7 +4,6 @@
 #' @param type type of column to return.
 #'
 #' @return TRUE/FALSE if binary
-#' @export check_binary_vec
 #'
 #'
 #' @examples
@@ -30,7 +29,6 @@ check_binary_vec <- function(x, type) {
 #' @param type type of column to return.
 #'
 #' @return TRUE/FALSE if facet variable (< 6 levels)
-#' @export check_facet_vec
 #'
 #' @examples
 #' require(NHANES)
