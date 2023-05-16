@@ -33,8 +33,8 @@ Check the unit tests for `gg_base()` and `gg_points()` in
 # Shiny server tests
 
 Check the shiny `testServer()` tests for `mod_var_input_server()` and
-`mod_display_plot_server()` in
+`mod_scatter_output_server()` in
 
     #> tests/testthat/
-    #> ├── test-mod_display_plot_server.R
+    #> ├── test-mod_scatter_output_server.R
     #> └── test-mod_var_input_server.R
