@@ -8,6 +8,5 @@
 
 library(testthat)
 source("app.R")
-test_dir(path = "/Users/mjfrigaard/projects/dev/app/tests/testthat/")
-testthat::test_file("/Users/mjfrigaard/projects/dev/app/tests/testthat/test-mods.R")
-
+test_dir(path = "tests/testthat/")
+testthat::test_file("tests/testthat/test-mod_abc_server.R")
