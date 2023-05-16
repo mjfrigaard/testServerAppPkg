@@ -2,20 +2,22 @@
 library(shiny)
 library(testthat)
 
+# utils ------------------------------------------------------------------
+source("utils.R")
 
 # modules ------------------------------------------------------------------
-source("module.R")
+source("modules.R")
 
 
 # standalone shiny app function
-doublerApp <- function() {
+abcApp <- function() {
   shiny::shinyApp(
     ui = shiny::fluidPage(
-      app_module_ui("x")
+      mod_abc_ui("x")
     ), 
     server = function(input, output, session) { 
-      app_module_server("x")
+      mod_abc_server("x")
     }
   )
 }
-doublerApp()
+abcApp()
