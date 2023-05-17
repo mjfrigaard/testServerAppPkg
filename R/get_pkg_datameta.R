@@ -14,7 +14,7 @@
 #' @return `data.frame` with 6 variables (`dataset`, `title`, `dimensions`,
 #' `obs`, `vars`, `display_title`)
 #'
-#' @export pkg_datasets_meta
+#' @export get_pkg_datameta
 #'
 #' @importFrom tibble as_tibble
 #' @importFrom dplyr select mutate
@@ -22,8 +22,8 @@
 #'
 #' @examples
 #' require(tidyr)
-#' pkg_datasets_meta("tidyr")
-pkg_datasets_meta <- function(package, allClass = FALSE,
+#' get_pkg_datameta("tidyr")
+get_pkg_datameta <- function(package, allClass = FALSE,
                      incPackage = length(package) > 1,
                      maxTitle = NULL) {
   # make sure requested packages are available and loaded
