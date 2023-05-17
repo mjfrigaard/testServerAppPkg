@@ -8,7 +8,7 @@ appServer <- function(input, output, session) {
   selected_data <- mod_data_input_server(id = "data")
 
   selected_vars <- mod_var_input_server(id = "vars",
-                                       input_data = selected_data)
+                                        input_data = selected_data)
 
   mod_scatter_server(id = "plot",
                      plot_data = selected_vars)

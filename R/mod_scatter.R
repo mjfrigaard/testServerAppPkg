@@ -49,18 +49,15 @@ mod_scatter_server <- function(id, plot_data) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
-    plot_inputs <- shiny::isolate({
-                    shiny::reactive({
-                        list(
-                          df = plot_data()$df,
-                          x_var = plot_data()$x,
-                          y_var = plot_data()$y,
-                          col_var = plot_data()$col,
-                          facet_var = plot_data()$facet,
-                          alpha = plot_data()$alpha,
-                          size = plot_data()$size)
-                        })
-                      }) |>
+      plot <- shiny::reactive({
+                gg_color_scatter_facet(
+                        df = plot_data()$df,
+                        x_var = plot_data()$x,
+                        y_var = plot_data()$y,
+                        col_var = plot_data()$col,
+                        facet_var = plot_data()$facet,
+                        alpha =  plot_data()$alpha,
+                        size = plot_data()$size)}) |>
                       shiny::bindEvent(
                         c(plot_data()$df,
                           plot_data()$x, plot_data()$y,
@@ -70,20 +67,10 @@ mod_scatter_server <- function(id, plot_data) {
 
         # include for showing reactive values: ----
         output$vars <- shiny::renderPrint({
-          print(names(plot_inputs()),
+          print(names(plot()),
             width = 40, max.levels = NULL)})
 
-      plot <- shiny::reactive({
-        shiny::req(plot_inputs())
-        gg_color_scatter_facet(
-                df = plot_inputs()$df,
-                x_var = plot_inputs()$x_var,
-                y_var = plot_inputs()$y_var,
-                col_var = plot_inputs()$col_var,
-                facet_var = plot_inputs()$facet_var,
-                alpha =  plot_inputs()$alpha,
-                size = plot_inputs()$size)
-          })
+
         # include for showing reactive values: ----
         output$plot <- shiny::renderPrint({
         print(class(plot()),
@@ -97,8 +84,6 @@ mod_scatter_server <- function(id, plot_data) {
       }) |>
         shiny::bindEvent(plot(),
           ignoreNULL = TRUE, ignoreInit = FALSE)
-
-
 
   })
 }

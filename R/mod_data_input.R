@@ -56,14 +56,13 @@ mod_data_input_server <- function(id) {
       }) |>
       shiny::bindEvent(input$pkg)
 
-    return(shiny::reactive({
+    return(
+      shiny::reactive({
             list(
-              pkg = input$pkg,
-              ds = input$data
+              pkg_data = get_pkg_data(package = input$pkg)[[input$data]]
               )
-            }) |>
-            shiny::bindEvent(c(input$pkg, input$ds))
-      )
-  })
+            })
+        )
 
+  })
 }
