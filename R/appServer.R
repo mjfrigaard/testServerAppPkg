@@ -10,7 +10,8 @@ appServer <- function(input, output, session) {
   selected_vars <- mod_var_input_server(id = "vars",
                                         input_data = selected_data)
 
-  mod_scatter_server(id = "plot", vars = selected_vars,
+  mod_scatter_server(id = "plot",
+                     vars = selected_vars,
                      df = selected_data)
 
   # include for showing reactive values: ----
