@@ -17,3 +17,18 @@ shiny server module
 \description{
 Import variables Server module
 }
+\section{Use}{
+
+The returned list includes:
+\itemize{
+\item \code{df} is the same object that is stored in \code{pkg_data()}, which is built
+from the \code{input$pkg} and \code{input$ds}.
+\item \code{x}: the x axis variable
+\item \code{y}: the y axis variable
+\item \code{col}: the color variable
+\item \code{facet}: the facet variable
+\item \code{alpha}: the alpha (opacity) for the points
+\item \code{size}: the size of the points
+}
+}
+

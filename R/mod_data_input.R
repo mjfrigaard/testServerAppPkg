@@ -36,6 +36,12 @@ mod_data_input_ui <- function(id) {
 #' @return shiny server module
 #' @export mod_data_input_server
 #'
+#' @section Use:
+#'
+#' `input$data` includes a call to `shiny::observe()`,
+#' and `shiny::bindEvent(input$pkg)` to ensure both values are
+#' included in the returned object.
+#'
 #' @importFrom shiny NS moduleServer reactive
 mod_data_input_server <- function(id) {
 
@@ -50,13 +56,13 @@ mod_data_input_server <- function(id) {
       }) |>
       shiny::bindEvent(input$pkg)
 
-    return(
-        shiny::reactive({
-          list(
-            pkg = input$pkg,
-            ds = input$data
-            )
-          })
+    return(shiny::reactive({
+            list(
+              pkg = input$pkg,
+              ds = input$data
+              )
+            }) |>
+            shiny::bindEvent(c(input$pkg, input$ds))
       )
   })
 

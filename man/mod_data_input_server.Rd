@@ -15,3 +15,11 @@ shiny server module
 \description{
 Import data server module
 }
+\section{Use}{
+
+
+\code{input$data} includes a call to \code{shiny::observe()},
+and \code{shiny::bindEvent(input$pkg)} to ensure both values are
+included in the returned object.
+}
+

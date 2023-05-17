@@ -10,9 +10,9 @@
 #' @importFrom ggplot2 ggplot aes
 #'
 #' @examples
-#' require(testServerPkgApp)
-#' movies <- testServerPkgApp::movies
-#' gg_base(df = movies, x_var = "critics_score", y_var = "imdb_rating")
+#' require(palmerpenguins)
+#' penguins <- palmerpenguins::penguins
+#' gg_base(df = penguins, x_var = "bill_length_mm", y_var = "body_mass_g")
 gg_base <- function(df, x_var, y_var) {
   ggplot2::ggplot(
     data = df,

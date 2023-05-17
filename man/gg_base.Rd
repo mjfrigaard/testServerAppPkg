@@ -20,7 +20,7 @@ plot object
 Base plot (ggplot2)
 }
 \examples{
-require(testServerPkgApp)
-movies <- testServerPkgApp::movies
-gg_base(df = movies, x_var = "critics_score", y_var = "imdb_rating")
+require(palmerpenguins)
+penguins <- palmerpenguins::penguins
+gg_base(df = penguins, x_var = "bill_length_mm", y_var = "body_mass_g")
 }

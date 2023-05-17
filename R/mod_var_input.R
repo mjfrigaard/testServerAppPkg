@@ -50,10 +50,8 @@ mod_var_input_ui <- function(id) {
       value = 2
     ),
     ## include these for showing reactive values to include in tests:  ----
-    # shiny::verbatimTextOutput(outputId = ns("return")),
-    # shiny::verbatimTextOutput(outputId = ns("vals")),
-    shiny::code("str(pkg_data())"),
-    shiny::verbatimTextOutput(outputId = ns("data"))
+    shiny::code("mod_var_input: str(pkg_data())"),
+    shiny::verbatimTextOutput(outputId = ns("return"))
   )
 }
 
@@ -63,41 +61,41 @@ mod_var_input_ui <- function(id) {
 #' @param id module id
 #' @param input_data pkg data from `mod_data_input`
 #'
+#' @section Use:
+#' The returned list includes:
+#'
+#' * `df` is the same object that is stored in `pkg_data()`, which is built
+#'    from the `input$pkg` and `input$ds`.
+#' * `x`: the x axis variable
+#' * `y`: the y axis variable
+#' * `col`: the color variable
+#' * `facet`: the facet variable
+#' * `alpha`: the alpha (opacity) for the points
+#' * `size`: the size of the points
+#'
 #' @return shiny server module
 #' @export mod_var_input_server
 #'
-#' @importFrom shiny NS moduleServer reactive
+#' @importFrom shiny NS moduleServer reactive observe
+#' @importFrom shiny bindEvent renderPrint updateSelectInput isolate observe
+#'
 mod_var_input_server <- function(id, input_data) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
-
     pkg_data <- shiny::reactive({
-      get_pkg_data(package = input_data()$pkg)[[input_data()$ds]]
-    }) |>
+        get_pkg_data(package = input_data()$pkg)[[input_data()$ds]]
+        }) |>
       shiny::bindEvent(c(input_data()$pkg,
-                         input_data()$ds))
+                         input_data()$ds),
+        ignoreNULL = TRUE, ignoreInit = TRUE)
 
     # include for showing reactive values: ----
     output$return <- shiny::renderPrint({
-      str(input_data()$pkg)
-    }, width = 60) |>
-      shiny::bindEvent(input_data()$pkg)
-    # include for showing reactive values: ----
-
-    # include for showing reactive values: ----
-    output$vals <- shiny::renderPrint({
-      str(input_data()$ds)
-    }, width = 60) |>
-      shiny::bindEvent(input_data()$ds)
-    # include for showing reactive values: ----
-
-    # include for showing reactive values: ----
-    output$data <- shiny::renderPrint({
-      str(pkg_data())
-    }, width = 60) |>
-      shiny::bindEvent(pkg_data())
-    # include for showing reactive values: ----
+      print(str(pkg_data()),
+        width = 12,
+        max.levels = NULL)
+    })
 
     shiny::observe({
         x_nms <- num_app_inputs(df = pkg_data())
@@ -138,23 +136,21 @@ mod_var_input_server <- function(id, input_data) {
     return(
         shiny::reactive({
           list(
+            'df' = get_pkg_data(package = input_data()$pkg)[[input_data()$ds]],
             "x" = input$x,
             "y" = input$y,
             "col" = input$col,
             "facet" = input$facet,
             "alpha" = input$alpha,
-            "size" = input$size,
-            "plot_title" = make_plot_title(
-                            x = input$x,
-                            y = input$y,
-                            color = input$col))
+            "size" = input$size)
           }) |>
-            shiny::bindEvent(c(input$x, input$y, input$col, input$facet,
-                               input$alpha, input$size))
+            shiny::bindEvent(c(input_data()$pkg, input_data()$ds,
+                               input$x, input$y,
+                               input$col, input$facet,
+                               input$alpha, input$size),
+                               ignoreNULL = TRUE,
+                               ignoreInit = TRUE)
       )
-
-
-
 
   })
 }

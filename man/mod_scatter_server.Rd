@@ -4,14 +4,12 @@
 \alias{mod_scatter_server}
 \title{Scatter plot server module}
 \usage{
-mod_scatter_server(id, vars, df)
+mod_scatter_server(id, plot_data)
 }
 \arguments{
 \item{id}{module id}
 
-\item{vars}{inputs from mod_var_input}
-
-\item{df}{data for application}
+\item{plot_data}{inputs from mod_var_input}
 }
 \value{
 shiny server module
