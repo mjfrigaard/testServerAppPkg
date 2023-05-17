@@ -17,7 +17,7 @@ testthat::test_file("tests/testthat/test-gg_points-attr.R")
 
 # run module function tests -----------------------------------------------
 # testthat::test_file("tests/testthat/test-mod_var_input_server.R")
-# testthat::test_file("tests/testthat/test-mod_scatter_output_server.R")
+# testthat::test_file("tests/testthat/test-mod_scatter_server.R")
 
 
 library(shinytest2)

@@ -5,22 +5,18 @@
 #' @export appServer
 appServer <- function(input, output, session) {
 
-  mod_var_input_server(id = "vars")
+  selected_data <- mod_data_input_server(id = "data")
 
-  # selected_vars <- mod_var_input_server(id = "vars")
-  # mod_scatter_output_server(
-  #   id = "plot",
-  #   var_inputs = selected_vars,
-  #   app_data = shiny::reactive({ palmerpenguins::penguins })
-  # )
+  selected_vars <- mod_var_input_server(id = "vars",
+                                        input_data = selected_data)
 
-  # # include these for showing reactive values to include in tests: ----
-  # output$vals <- shiny::renderPrint({
-  #   all_vals <- shiny::reactiveValuesToList(
-  #     x = input,
-  #     all.names = TRUE
-  #   )
-  #   print(all_vals)
-  # })
+  mod_scatter_server(id = "plot", vars = selected_vars,
+                     df = selected_data)
+
+  # include for showing reactive values: ----
+  output$vals <- shiny::renderPrint({
+    shiny::reactiveValuesToList(x = input, all.names = TRUE)
+  })
+  # include for showing reactive values: ----
 
 }

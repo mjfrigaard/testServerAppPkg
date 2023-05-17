@@ -10,23 +10,26 @@ appUI <- function() {
     shiny::fluidPage(
       shiny::sidebarLayout(
         shiny::sidebarPanel(
-          # inputs placeholder
-          shiny::code("inputs"),
-          # inputs ----
-          mod_var_input_ui(
-            id = "vars",
-            app_data = tibble::tibble(`integer column` = as.integer(c(1:3)),
-                                      `double column` = as.double(c(4:6)),
-                                      `facet 01` = c(LETTERS[1:3]),
-                                      `facet 02` = c(LETTERS[1:3]),
-                                      `binary` = c(TRUE, FALSE, NA)))
-        ),
+          # data inputs ----
+          shiny::h4(shiny::code("mod_data_input")),
+          mod_data_input_ui("data"),
+          # var inputs ----
+          shiny::h4(shiny::code("mod_var_input")),
+          mod_var_input_ui(id = "vars")),
         shiny::mainPanel(
           shiny::tags$br(),
-          # inputs placeholder
-          shiny::code("outputs"),
-          # outputs  ----
-          mod_scatter_output_ui(id = "plot")
+          # include for showing reactive values: ----
+          shiny::fluidRow(
+            shiny::h4(shiny::code("appServer(): reactive values")),
+              shiny::verbatimTextOutput("vals")
+          ),
+          # include for showing reactive values: ----
+          shiny::fluidRow(
+              # inputs placeholder
+              shiny::h4(shiny::code("mod_scatter")),
+              # outputs  ----
+              mod_scatter_ui(id = "plot")
+            )
         )
       )
     )
@@ -46,7 +49,7 @@ appUI <- function() {
 #         shiny::mainPanel(
 #           shiny::tags$br(),
 #           # outputs
-#           mod_scatter_output_ui(id = "plot"),
+#           mod_scatter_ui(id = "plot"),
 #           # # include these for showing reactive values to include in tests: ----
 #           # shiny::fluidRow(
 #           #   shiny::code("reactive values"),

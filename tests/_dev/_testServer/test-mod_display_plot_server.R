@@ -1,5 +1,5 @@
 shiny::testServer(
-  mod_scatter_output_server,
+  mod_scatter_server,
   args = list(var_inputs = reactive(
     list(
       x = "imdb_rating",

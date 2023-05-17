@@ -4,10 +4,12 @@
 \alias{mod_var_input_server}
 \title{Import variables Server module}
 \usage{
-mod_var_input_server(id)
+mod_var_input_server(id, input_data)
 }
 \arguments{
 \item{id}{module id}
+
+\item{input_data}{pkg data from \code{mod_data_input}}
 }
 \value{
 shiny server module
