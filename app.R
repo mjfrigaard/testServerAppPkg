@@ -3,6 +3,6 @@
 
 pkgload::load_all(export_all = FALSE, helpers = TRUE, attach_testthat = TRUE)
 
-library(testServerPkgApp)
+library(tstSvrPkgApp)
 
-testServerPkgApp::runShinyApp(testing = TRUE)
+tstSvrPkgApp::runShinyApp(testing = TRUE)

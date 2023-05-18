@@ -13,7 +13,7 @@
 #' @export demoInputsApp
 #'
 #' @examples
-#' require(testServerPkgApp)
+#' require(tstSvrPkgApp)
 #' # demoInputsApp()
 demoInputsApp <- function(data) {
   # data
