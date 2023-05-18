@@ -9,7 +9,7 @@ mod_scatter_server(id, plot_data)
 \arguments{
 \item{id}{module id}
 
-\item{plot_data}{inputs from mod_var_input}
+\item{plot_data}{inputs from mod_var_select}
 }
 \value{
 shiny server module

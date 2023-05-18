@@ -1,4 +1,4 @@
-shiny::testServer(mod_var_input_server, {
+shiny::testServer(mod_var_select_server, {
   # set inputs
   session$setInputs(
     x = "imdb_rating",

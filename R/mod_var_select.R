@@ -1,15 +1,15 @@
-#' Import variables UI module
+#' Select variables UI module
 #'
 #' @param id module id
 #' @param pkg_data data for application
 #'
 #' @return shiny UI module
-#' @export mod_var_input_ui
+#' @export mod_var_select_ui
 #'
 #' @importFrom shiny NS tagList selectInput
 #' @importFrom shiny sliderInput textInput
 #'
-mod_var_input_ui <- function(id) {
+mod_var_select_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shiny::fluidRow(
@@ -54,19 +54,19 @@ mod_var_input_ui <- function(id) {
             value = 2
           )
         )
-    ),
-    shiny::fluidRow(
-      column(width = 12,
-        ## include these for showing reactive values to include in tests:  ----
-        shiny::code("mod_var_input: str(pkg_data())"),
-        shiny::verbatimTextOutput(outputId = ns("return")),
-      )
     )
+    # shiny::fluidRow(
+    #   column(width = 12,
+    # #    ## include these for showing reactive values to include in tests:  ----
+    #     shiny::code("mod_var_select: str(pkg_data())"),
+    #     shiny::verbatimTextOutput(outputId = ns("return")),
+    #   )
+    # )
   )
 }
 
 
-#' Import variables Server module
+#' Select variables Server module
 #'
 #' @param id module id
 #' @param input_data pkg data from `mod_data_input`
@@ -84,29 +84,28 @@ mod_var_input_ui <- function(id) {
 #' * `size`: the size of the points
 #'
 #' @return shiny server module
-#' @export mod_var_input_server
+#' @export mod_var_select_server
 #'
 #' @importFrom shiny NS moduleServer reactive observe
 #' @importFrom shiny bindEvent renderPrint updateSelectInput isolate observe
 #'
-mod_var_input_server <- function(id, input_data) {
+mod_var_select_server <- function(id, input_data) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
     pkg_data <- shiny::reactive({
-        df <- input_data()$pkg_data
-        return(df)
+      req(input_data())
+        input_data()
         }) |>
-      shiny::bindEvent(input_data()$pkg_data,
-                       ignoreNULL = TRUE,
-                       ignoreInit = TRUE)
+        shiny::bindEvent(input_data(),
+          ignoreNULL = TRUE, ignoreInit = FALSE)
 
-    # include for showing reactive values: ----
-    output$return <- shiny::renderPrint({
-      print(class(pkg_data()),
-        width = 60,
-        max.levels = NULL)
-    })
+    # # include for showing reactive values: ----
+    # output$return <- shiny::renderPrint({
+    #   print(str(pkg_data()),
+    #     width = 60,
+    #     max.levels = NULL)
+    # })
     shiny::observe({
         x_nms <- num_app_inputs(df = pkg_data())
       shiny::updateSelectInput(session,
@@ -114,7 +113,7 @@ mod_var_input_server <- function(id, input_data) {
         choices = x_nms,
         selected = x_nms[1])
       }) |>
-      shiny::bindEvent(pkg_data())
+      shiny::bindEvent(input_data())
 
     shiny::observe({
         y_nms <- num_app_inputs(df = pkg_data())
@@ -123,7 +122,7 @@ mod_var_input_server <- function(id, input_data) {
         choices = y_nms,
         selected = y_nms[2])
       }) |>
-      shiny::bindEvent(pkg_data())
+      shiny::bindEvent(input_data())
 
     shiny::observe({
         col_nms <- binary_app_inputs(df = pkg_data())
@@ -132,7 +131,7 @@ mod_var_input_server <- function(id, input_data) {
         choices = col_nms,
         selected = col_nms[1])
       }) |>
-      shiny::bindEvent(pkg_data())
+      shiny::bindEvent(input_data())
 
     shiny::observe({
         facet_nms <- facet_app_inputs(df = pkg_data())
@@ -141,26 +140,20 @@ mod_var_input_server <- function(id, input_data) {
         choices = facet_nms,
         selected = facet_nms[1])
       }) |>
-      shiny::bindEvent(pkg_data())
+      shiny::bindEvent(input_data())
 
-    return(
-        shiny::reactive({
-          list(
-            "df" = input_data()$pkg_data,
-            "x" = input$x,
-            "y" = input$y,
-            "col" = input$col,
-            "facet" = input$facet,
-            "alpha" = input$alpha,
-            "size" = input$size)
-          }) |>
-            shiny::bindEvent(c(input_data()$pkg_data,
-                               input$x, input$y,
-                               input$col, input$facet,
-                               input$alpha, input$size),
-                               ignoreNULL = TRUE,
-                               ignoreInit = TRUE)
-      )
+      return(
+          shiny::reactive({
+            list(
+              df = input_data(),
+              x_var = input$x,
+              y_var = input$y,
+              col_var = input$col,
+              facet_var = input$facet,
+              alpha = input$alpha,
+              size = input$size)
+            })
+          )
 
   })
 }

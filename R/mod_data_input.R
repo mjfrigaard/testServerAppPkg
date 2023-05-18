@@ -36,7 +36,9 @@ mod_data_input_ui <- function(id) {
 #' @return shiny server module
 #' @export mod_data_input_server
 #'
-#' @section Use:
+#' @section Using `mod_data_input`:
+#'
+#' `mod_data_input` is intended to be used with `mod_var_select`.
 #'
 #' `input$data` includes a call to `shiny::observe()`,
 #' and `shiny::bindEvent(input$pkg)` to ensure both values are
@@ -47,22 +49,22 @@ mod_data_input_server <- function(id) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
+    pkg_data_nms <- reactive({
+      names(get_pkg_data(package = input$pkg))
+    })
+
     shiny::observe({
-      pkg_data_nms <- names(get_pkg_data(package = input$pkg))
       shiny::updateSelectInput(session,
         inputId = "data",
-        choices = pkg_data_nms,
-        selected = pkg_data_nms[1])
+        choices = pkg_data_nms(),
+        selected = pkg_data_nms()[1])
       }) |>
-      shiny::bindEvent(input$pkg)
+      shiny::bindEvent(pkg_data_nms())
 
-    return(
-      shiny::reactive({
-            list(
-              pkg_data = get_pkg_data(package = input$pkg)[[input$data]]
-              )
-            })
-        )
+    shiny::reactive({
+      req(input$data)
+      get_pkg_data(package = input$pkg)[[input$data]]
+      })
 
   })
 }
