@@ -15,28 +15,28 @@ mod_scatter_ui <- function(id) {
         width = 12,
         shiny::plotOutput(outputId = ns("scatterplot"))
         )
-      ),
-    # include for showing reactive values: ----
-    shiny::fluidRow(
-      shiny::column(
-        width = 6,
-        shiny::code("mod_scatter: str(plot_data())"),
-        shiny::verbatimTextOutput(ns("vars"))
-      ),
-    # include for showing reactive values: ----
-    shiny::column(
-        width = 6,
-        shiny::code("mod_scatter: names(plot_data())"),
-        shiny::verbatimTextOutput(ns("plot"))
       )
-    )
+    # # include for showing reactive values: ----
+    # shiny::fluidRow(
+    #   shiny::column(
+    #     width = 6,
+    #     shiny::code("mod_scatter: class(scatter_inputs())"),
+    #     shiny::verbatimTextOutput(ns("vars"))
+    #   ),
+    # # include for showing reactive values: ----
+    # shiny::column(
+    #     width = 6,
+    #     shiny::code("mod_scatter: names(scatter_inputs())"),
+    #     shiny::verbatimTextOutput(ns("plot"))
+    #   )
+    # )
   )
 }
 
 #' Scatter plot server module
 #'
 #' @param id module id
-#' @param plot_data inputs from mod_var_select
+#' @param scatter_inputs inputs from mod_var_select
 #'
 #' @return shiny server module
 #' @export mod_scatter_server
@@ -45,35 +45,41 @@ mod_scatter_ui <- function(id) {
 #' @importFrom shiny renderPlot isolate bindEvent req
 #' @importFrom stringr str_replace_all
 #' @importFrom ggplot2 labs theme_minimal theme
-mod_scatter_server <- function(id, plot_data) {
+mod_scatter_server <- function(id, scatter_inputs) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
+      plot <- shiny::reactive({
+                  req(scatter_inputs())
+                gg_color_scatter_facet(
+                    df = scatter_inputs()$df,
+                    x_var = scatter_inputs()$x_var,
+                    y_var = scatter_inputs()$y_var,
+                    col_var = scatter_inputs()$col_var,
+                    facet_var = scatter_inputs()$facet_var,
+                    alpha = scatter_inputs()$alpha,
+                    size = scatter_inputs()$size)
+                }) |>
+                  shiny::bindEvent(scatter_inputs(),
+                                   ignoreNULL = TRUE,
+                                   ignoreInit = FALSE)
+
+
       shiny::observe({
-              shiny::req(plot_data())
-        output$scatterplot <- shiny::renderPlot({
-              gg_color_scatter_facet(
-                df = plot_data()$df,
-                x_var = plot_data()$x_var,
-                y_var = plot_data()$y_var,
-                col_var = plot_data()$col_var,
-                facet_var = plot_data()$facet_var,
-                alpha = plot_data()$alpha,
-                size = plot_data()$size)
-          })
-      }) |>
-        shiny::bindEvent(plot_data(),
-          ignoreNULL = TRUE, ignoreInit = TRUE)
+              shiny::req(scatter_inputs())
+        output$scatterplot <- shiny::renderPlot({ plot() })
+      }) |> shiny::bindEvent(plot(),
+                             ignoreNULL = TRUE,
+                             ignoreInit = TRUE)
 
-        # include for showing reactive values: ----
-        output$vars <- shiny::renderPrint({
-          print(str(plot_data()$df),
-            width = 40, max.levels = NULL)})
 
-        # include for showing reactive values: ----
-        output$plot <- shiny::renderPrint({
-        print(names(plot_data()),
-          width = 40, max.levels = NULL)})
+        # # include for showing reactive values: ----
+        # output$vars <- shiny::renderPrint({
+        #   print(class(plot()), width = 40, max.levels = NULL)})
+        #
+        # # include for showing reactive values: ----
+        # output$plot <- shiny::renderPrint({
+        # print(names(plot()), width = 40, max.levels = NULL)})
 
   })
 }

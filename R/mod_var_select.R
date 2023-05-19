@@ -100,6 +100,30 @@ mod_var_select_server <- function(id, input_data) {
         shiny::bindEvent(input_data(),
           ignoreNULL = TRUE, ignoreInit = FALSE)
 
+    num_vars <- shiny::reactive({
+                 req(input_data())
+                num_app_inputs(df = pkg_data())
+                }) |>
+                shiny::bindEvent(input_data(),
+                                 ignoreNULL = TRUE,
+                                 ignoreInit = FALSE)
+
+    col_vars <- shiny::reactive({
+                  req(input_data())
+                binary_app_inputs(df = pkg_data())
+                }) |>
+                 shiny::bindEvent(input_data(),
+                                  ignoreNULL = TRUE,
+                                  ignoreInit = FALSE)
+
+    facet_vars <- shiny::reactive({
+                  req(input_data())
+                facet_app_inputs(df = pkg_data())
+                }) |>
+                 shiny::bindEvent(input_data(),
+                                  ignoreNULL = TRUE,
+                                  ignoreInit = FALSE)
+
     # # include for showing reactive values: ----
     # output$return <- shiny::renderPrint({
     #   print(str(pkg_data()),
@@ -107,40 +131,36 @@ mod_var_select_server <- function(id, input_data) {
     #     max.levels = NULL)
     # })
     shiny::observe({
-        x_nms <- num_app_inputs(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "x",
-        choices = x_nms,
-        selected = x_nms[1])
+        choices = num_vars(),
+        selected = num_vars()[1])
       }) |>
-      shiny::bindEvent(input_data())
+      shiny::bindEvent(num_vars())
 
     shiny::observe({
-        y_nms <- num_app_inputs(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "y",
-        choices = y_nms,
-        selected = y_nms[2])
+        choices = num_vars(),
+        selected = num_vars()[2])
       }) |>
-      shiny::bindEvent(input_data())
+      shiny::bindEvent(num_vars())
 
     shiny::observe({
-        col_nms <- binary_app_inputs(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "col",
-        choices = col_nms,
-        selected = col_nms[1])
+        choices = col_vars(),
+        selected = col_vars()[1])
       }) |>
-      shiny::bindEvent(input_data())
+      shiny::bindEvent(col_vars())
 
     shiny::observe({
-        facet_nms <- facet_app_inputs(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "facet",
-        choices = facet_nms,
-        selected = facet_nms[1])
+        choices = facet_vars(),
+        selected = facet_vars()[1])
       }) |>
-      shiny::bindEvent(input_data())
+      shiny::bindEvent(facet_vars())
 
       return(
           shiny::reactive({

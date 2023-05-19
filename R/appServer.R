@@ -11,7 +11,7 @@ appServer <- function(input, output, session) {
                         input_data = selected_data)
 
   mod_scatter_server(id = "plot",
-                     plot_data = selected_vars)
+                     scatter_inputs = selected_vars)
 
   # # include for showing reactive values: ----
   # output$vals <- shiny::renderPrint({
