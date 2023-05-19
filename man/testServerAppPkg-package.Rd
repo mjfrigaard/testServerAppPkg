@@ -6,6 +6,6 @@
 \alias{testServerAppPkg-package}
 \title{testServerAppPkg: Test Your Shiny Package App server functions}
 \description{
-This shiny app was developed as a package using devtools and usethis.
+This shiny app-package was developed to demonstrate testing with testthat and shiny's testServer().
 }
 \keyword{internal}

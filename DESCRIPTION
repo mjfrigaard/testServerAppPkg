@@ -4,8 +4,8 @@ Title: Test Your Shiny Package App server functions
 Version: 0.1.0
 Author: Martin Frigaard
 Maintainer: Martin Frigaard <mjfrigaard@pm.me>
-Description: This shiny app was developed as a package using devtools and 
-    usethis. 
+Description: This shiny app-package was developed to demonstrate testing with 
+    testthat and shiny's testServer(). 
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
