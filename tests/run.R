@@ -1,5 +1,5 @@
 library(testthat)
-library(tstSvrPkgApp)
+library(testServerAppPkg)
 # run utility function tests ----------------------------------------------
 testthat::test_file(path = "tests/testthat/test-binary_app_inputs.R")
 testthat::test_file(path = "tests/testthat/test-get_col_types.R")

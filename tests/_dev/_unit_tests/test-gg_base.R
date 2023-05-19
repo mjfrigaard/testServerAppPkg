@@ -1,5 +1,5 @@
 library(vdiffr)
-library(tstSvrPkgApp)
+library(testServerAppPkg)
 testthat::test_that("gg_base works", {
   # define inputs
   set.seed(1234)

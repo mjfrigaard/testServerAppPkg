@@ -1,4 +1,4 @@
-Package: tstSvrPkgApp
+Package: testServerAppPkg
 Type: Package
 Title: Test Your Shiny Package App server functions
 Version: 0.1.0

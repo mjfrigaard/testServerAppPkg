@@ -1,3 +1,3 @@
 library(testthat)
-library(tstSvrPkgApp)
-test_check("tstSvrPkgApp")
+library(testServerAppPkg)
+test_check("testServerAppPkg")

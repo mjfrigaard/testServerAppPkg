@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `tstSvrPkgApp`
+# `testServerAppPkg`
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `tstSvrPkgApp` is to demonstrate how to build and test a shiny
+The goal of `testServerAppPkg` is to demonstrate how to build and test a shiny
 application using `usethis`, `shiny::testServer()`, and `shinytest2`.
 
 ## Installation
@@ -19,7 +19,7 @@ it’s contents).
 ## Run the app
 
 ``` r
-tstSvrPkgApp::runShinyApp()
+testServerAppPkg::runShinyApp()
 ```
 
 # Unit tests
