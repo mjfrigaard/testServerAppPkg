@@ -20,7 +20,7 @@ mod_scatter_ui <- function(id) {
     # shiny::fluidRow(
     #   shiny::column(
     #     width = 6,
-    #     shiny::code("mod_scatter: class(scatter_inputs())"),
+    #     shiny::code("mod_scatter: names(scatter_inputs())"),
     #     shiny::verbatimTextOutput(ns("vars"))
     #   ),
     # # include for showing reactive values: ----
@@ -28,8 +28,7 @@ mod_scatter_ui <- function(id) {
     #     width = 6,
     #     shiny::code("mod_scatter: names(scatter_inputs())"),
     #     shiny::verbatimTextOutput(ns("plot"))
-    #   )
-    # )
+    #   ))
   )
 }
 
@@ -67,16 +66,19 @@ mod_scatter_server <- function(id, scatter_inputs) {
 
       shiny::observe({
               shiny::req(scatter_inputs())
-        output$scatterplot <- shiny::renderPlot({ plot() })
+        output$scatterplot <- shiny::renderPlot({
+          plot()
+          })
       }) |> shiny::bindEvent(plot(),
                              ignoreNULL = TRUE,
                              ignoreInit = TRUE)
 
-
-        # # include for showing reactive values: ----
+        # # # include for showing reactive values: ----
         # output$vars <- shiny::renderPrint({
-        #   print(class(plot()), width = 40, max.levels = NULL)})
-        #
+        #   print(names(scatter_inputs()),
+        #     width = 40, max.levels = NULL)})
+
+
         # # include for showing reactive values: ----
         # output$plot <- shiny::renderPrint({
         # print(names(plot()), width = 40, max.levels = NULL)})
