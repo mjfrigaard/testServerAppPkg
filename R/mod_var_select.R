@@ -102,7 +102,7 @@ mod_var_select_server <- function(id, input_data) {
 
     num_vars <- shiny::reactive({
                  req(input_data())
-                num_app_inputs(df = pkg_data())
+                pull_numeric_cols(df = pkg_data())
                 }) |>
                 shiny::bindEvent(input_data(),
                                  ignoreNULL = TRUE,
@@ -110,7 +110,7 @@ mod_var_select_server <- function(id, input_data) {
 
     col_vars <- shiny::reactive({
                   req(input_data())
-                binary_app_inputs(df = pkg_data())
+                pull_binary_cols(df = pkg_data())
                 }) |>
                  shiny::bindEvent(input_data(),
                                   ignoreNULL = TRUE,
@@ -118,7 +118,7 @@ mod_var_select_server <- function(id, input_data) {
 
     facet_vars <- shiny::reactive({
                   req(input_data())
-                facet_app_inputs(df = pkg_data())
+                pull_facet_cols(df = pkg_data())
                 }) |>
                  shiny::bindEvent(input_data(),
                                   ignoreNULL = TRUE,

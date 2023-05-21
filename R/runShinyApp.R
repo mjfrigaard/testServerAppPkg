@@ -13,13 +13,3 @@ runShinyApp <- function() {
       server = appServer)
 
 }
-# runShinyApp <- function(testing = FALSE) {
-#   if (isTRUE(testing)) {
-#     shiny::shinyApp(
-#       ui = appUI, server = appServer,
-#       options = list("test.mode" = TRUE)
-#     )
-#   } else {
-#     shiny::shinyApp(ui = appUI, server = appServer)
-#   }
-# }
