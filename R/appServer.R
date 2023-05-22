@@ -7,7 +7,7 @@ appServer <- function(input, output, session) {
 
   pkg_dataset <- mod_data_input_server(id = "data")
 
-  plot_values <- mod_var_select_server(id = "vars",
+  plot_values <-mod_var_select_server(id = "vars",
                         input_data = pkg_dataset)
 
   mod_scatter_server(id = "plot",

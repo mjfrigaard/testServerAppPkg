@@ -19,7 +19,7 @@ it’s contents).
 ## Run the app
 
 ``` r
-testServerAppPkg::runShinyApp()
+testServerAppPkg::pkgDataApp()
 ```
 
 # Unit tests

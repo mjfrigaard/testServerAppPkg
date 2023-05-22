@@ -92,13 +92,13 @@ testthat::test_file("tests/testthat/test-shinytest2-confirm-plot-labels.R")
 #   y = expected_labels)
 
 
-# run test-runShinyApp.R -------------------------------------------------
+# run test-pkgDataApp.R -------------------------------------------------
 # from: https://rstudio.github.io/shinytest2/articles/use-package.html#application-objects-created-by-functions
-testthat::test_file("tests/testthat/test-runShinyApp.R")
+testthat::test_file("tests/testthat/test-pkgDataApp.R")
 
 # create test-scatterplot-mappings.R -----------------------------------------
 ## in console ------
-# shiny_app <- testServerAppPkg::runShinyApp()
+# shiny_app <- testServerAppPkg::pkgDataApp()
 # app <- AppDriver$new(shiny_app, height = 596, width = 1156)
 # put all values in list
 # all_values <- app$get_values()

@@ -5,4 +5,4 @@ pkgload::load_all(export_all = FALSE, helpers = TRUE, attach_testthat = TRUE)
 
 library(testServerAppPkg)
 
-testServerAppPkg::runShinyApp(testing = TRUE)
+testServerAppPkg::pkgDataApp(testing = TRUE)

@@ -17,28 +17,24 @@ mod_var_select_ui <- function(id) {
           shiny::selectInput(
             inputId = ns("x"),
             label = "X variable:",
-            choices = c("", NULL),
-            selected = NULL
+            choices = NULL
           ),
           shiny::selectInput(
             inputId = ns("y"),
             label = "Y variable:",
-            choices = c("", NULL),
-            selected = NULL
+            choices = NULL
           ),
           shiny::selectInput(
             inputId = ns("col"),
             label = "Color variable:",
-            choices = c("", NULL),
-            selected = NULL
+            choices = NULL
           )
         ),
       column(width = 6,
           shiny::selectInput(
             inputId = ns("facet"),
             label = "Facet variable:",
-            choices = c("", NULL),
-            selected = NULL
+            choices = NULL
           ),
           shiny::sliderInput(
             inputId = ns("alpha"),
@@ -57,7 +53,7 @@ mod_var_select_ui <- function(id) {
     )
     # shiny::fluidRow(
     #   column(width = 12,
-    # #    ## include these for showing reactive values to include in tests:  ----
+    # ## include these for showing reactive values to include in tests:  ----
     #     shiny::code("mod_var_select: str(pkg_data())"),
     #     shiny::verbatimTextOutput(outputId = ns("return")),
     #   )
@@ -71,7 +67,7 @@ mod_var_select_ui <- function(id) {
 #' @param id module id
 #' @param input_data pkg data from `mod_data_input`
 #'
-#' @section Use:
+#' @section Returned object:
 #' The returned list includes:
 #'
 #' * `df` is the same object that is stored in `pkg_data()`, which is built
@@ -86,6 +82,7 @@ mod_var_select_ui <- function(id) {
 #' @return shiny server module
 #' @export mod_var_select_server
 #'
+#' @importFrom janitor clean_names
 #' @importFrom shiny NS moduleServer reactive observe
 #' @importFrom shiny bindEvent renderPrint updateSelectInput isolate observe
 #'
@@ -95,34 +92,10 @@ mod_var_select_server <- function(id, input_data) {
 
     pkg_data <- shiny::reactive({
       req(input_data())
-        input_data()
+       janitor::clean_names(input_data())
         }) |>
         shiny::bindEvent(input_data(),
           ignoreNULL = TRUE, ignoreInit = FALSE)
-
-    num_vars <- shiny::reactive({
-                 req(input_data())
-                pull_numeric_cols(df = pkg_data())
-                }) |>
-                shiny::bindEvent(input_data(),
-                                 ignoreNULL = TRUE,
-                                 ignoreInit = FALSE)
-
-    col_vars <- shiny::reactive({
-                  req(input_data())
-                pull_binary_cols(df = pkg_data())
-                }) |>
-                 shiny::bindEvent(input_data(),
-                                  ignoreNULL = TRUE,
-                                  ignoreInit = FALSE)
-
-    facet_vars <- shiny::reactive({
-                  req(input_data())
-                pull_facet_cols(df = pkg_data())
-                }) |>
-                 shiny::bindEvent(input_data(),
-                                  ignoreNULL = TRUE,
-                                  ignoreInit = FALSE)
 
     # # include for showing reactive values: ----
     # output$return <- shiny::renderPrint({
@@ -130,42 +103,56 @@ mod_var_select_server <- function(id, input_data) {
     #     width = 60,
     #     max.levels = NULL)
     # })
+
     shiny::observe({
+      num_vars <- pull_numeric_cols(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "x",
-        choices = num_vars(),
-        selected = num_vars()[1])
+        choices = num_vars,
+        selected = num_vars[1])
       }) |>
-      shiny::bindEvent(num_vars())
+      shiny::bindEvent(pkg_data(),
+        ignoreNULL = TRUE,
+        ignoreInit = FALSE)
 
     shiny::observe({
+      num_vars <- pull_numeric_cols(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "y",
-        choices = num_vars(),
-        selected = num_vars()[2])
+        choices = num_vars,
+        selected = num_vars[2])
       }) |>
-      shiny::bindEvent(num_vars())
+      shiny::bindEvent(pkg_data(),
+        ignoreNULL = TRUE,
+        ignoreInit = FALSE)
 
     shiny::observe({
+      col_vars <- pull_binary_cols(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "col",
-        choices = col_vars(),
-        selected = col_vars()[1])
+        choices = col_vars,
+        selected = col_vars[1])
       }) |>
-      shiny::bindEvent(col_vars())
+      shiny::bindEvent(pkg_data(),
+        ignoreNULL = TRUE,
+        ignoreInit = FALSE)
 
     shiny::observe({
+      facet_vars <- pull_facet_cols(df = pkg_data())
       shiny::updateSelectInput(session,
         inputId = "facet",
-        choices = facet_vars(),
-        selected = facet_vars()[1])
+        choices = facet_vars,
+        selected = facet_vars[1])
       }) |>
-      shiny::bindEvent(facet_vars())
+      shiny::bindEvent(pkg_data(),
+        ignoreNULL = TRUE,
+        ignoreInit = FALSE)
 
       return(
           shiny::reactive({
+            shiny::req(c(input$x, input$y, input$col, input$facet))
             list(
-              df = input_data(),
+              df = janitor::clean_names(input_data()),
               x_var = input$x,
               y_var = input$y,
               col_var = input$col,

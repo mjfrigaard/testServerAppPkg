@@ -19,6 +19,6 @@ appServer <- function(input, output, session) {
 
 }
 
-runShinyApp() <- function() {
+pkgDataApp() <- function() {
   shiny::shinyApp(ui = appUI, server = appServer)
 }

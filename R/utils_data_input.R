@@ -2,85 +2,140 @@
 #'
 #' @param pkg name of package (a character vector)
 #'
-#' @return Package: 'name' loaded or Loading package: 'name'
-#' @export check_pkg
+#' @return Package: `'name'` loaded or Loading package: `'name'`
+#' @export check_inst_pkg
 #'
 #' @description
-#' If package is not installed, install with `install.packages(dependencies = TRUE)`
+#' Check if `pkg` is installed. If not, package is installed with
+#' `install.packages(dependencies = TRUE)` and loaded with
+#' `library(pkg, character.only = TRUE)`
 #'
 #'
 #' @examples
-#' check_pkg("plotly")
-check_pkg <- function(pkg) {
-  package.check <- lapply(X = pkg,
-  FUN = function(x) {
-    if (!require(x, character.only = TRUE)) {
-      install.packages(x, dependencies = TRUE)
-      library(x, character.only = TRUE)
-    }
-  }
+#' check_inst_pkg("plotly")
+check_inst_pkg <- function(pkg) {
+  package.check <- suppressWarnings(
+    suppressMessages(
+      suppressPackageStartupMessages(
+        lapply(X = pkg, FUN = function(x) {
+          if (!require(x, character.only = TRUE)) {
+            install.packages(x, dependencies = TRUE)
+          }
+        })
+      )
     )
+  )
+  suppressWarnings(
+    suppressPackageStartupMessages(
+      library(pkg, character.only = TRUE)
+    )
+  )
 }
 
-#' Get package data
+
+#' Check if package contains data.frame
 #'
-#' @param package name of package (a character vector)
+#' @param pkg name of package (a character vector)
 #'
-#' @return list of all datasets in package
-#' @export get_pkg_data
+#' @return logical (`TRUE` = has data.frame, `FALSE` = no data.frame)
+#' @export check_df_in_pkg
+#'
+#' @description
+#' Returns `TRUE` if package has `data.frame`. If package is not installed,
+#' install with `install.packages(dependencies = TRUE)`.
+#'
+#' 1. Check if the package is installed and load it
+#'
+#' 2. Retrieve the objects in the package
+#'
+#' 3. Use `purrr::map_lgl()` to apply `is.data.frame()` to each object in the
+#'  package. `map_lgl()` returns a logical vector with the same length as
+#'  the retrieved package objects.
+#'
+#'
+#' @seealso [check_inst_pkg()]
+#'
+#' @importFrom purrr map_lgl
 #'
 #' @examples
-#' require(tidyr)
-#' get_pkg_data("tidyr")
-get_pkg_data <- function(package) {
-  # load package
-  check_pkg(pkg = package)
-
-  pkg <- paste0("package:", package)
-
-  if (!is.null(package)) {
-
-    pkg_data_names <- function(package) {
-      # create namespace (ns)
-      ns <- asNamespace(package)
-      # get namespace
-      pkg_namespace <- get(".__NAMESPACE__.",
-        inherits = FALSE,
-        envir = asNamespace(package, base.OK = FALSE)
-      )
-      # get namespace information
-      ns_info <- sapply(
-        X = ls(pkg_namespace),
-        FUN = function(x) getNamespaceInfo(ns, x)
-      )
-      # get all info on all items in env
-      all_ns_items <- rapply(
-        object = ns_info, f = ls, classes = "environment",
-        how = "replace", all.names = TRUE
-      )
-      # extract only data
-      ns_data <- all_ns_items[["lazydata"]]
-
-      if (length(x = ns_data) < 1) {
-        stop("this package has no data")
-      } else {
-        return_data <- ns_data[grep(".*", ns_data,
-          perl = TRUE,
-          ignore.case = TRUE
-        )]
-      }
-      return(return_data)
-    }
-    # get names of lazydata objects from package
-    names <- pkg_data_names(package = package)
-    # get data from names
-    data <- lapply(names, get, pkg)
-    # set names to data
-    named_data_list <- purrr::set_names(x = data, nm = names)
-    return(named_data_list)
-  } else {
-    stop("please enter package name")
+#' check_df_in_pkg("dplyr")
+#' check_df_in_pkg("stringr")
+check_df_in_pkg <- function(pkg) {
+  if (!require(pkg, character.only = TRUE)) {
+    check_pkg(pkg = pkg)
   }
+  pkg_obj <- ls(paste("package", pkg, sep = ":"))
+  #
+  is_df <- purrr::map_lgl(.x = pkg_obj,
+    ~ is.data.frame(get(x = .x,
+      envir = as.environment(
+        paste("package", pkg, sep = ":")
+      ))))
+  return(any(is_df))
+}
+
+#' Get all packages on search list
+#'
+#' @return All items from `search()` with a `package:` prefix
+#' @export get_search_list_pkgs
+#'
+#' @description
+#' This function is meant to be used in combination with `check_df_in_pkg()`
+#'
+#' @seealso [check_df_in_pkg()]
+#'
+#' @importFrom purrr set_names
+#'
+#' @examples
+#' get_search_list_pkgs()
+#'
+get_search_list_pkgs <- function() {
+  all_srch_lst <- search()
+  all_pkgs <- grep(pattern = "package:", x = all_srch_lst, value = TRUE)
+  pkgs <- gsub(pattern = ".*:|.GlobalEnv|datasets",
+      replacement = "",
+      x = all_pkgs)
+  pkgs_chr <- pkgs[nzchar(pkgs)]
+  pkg_nms <- purrr::set_names(pkgs_chr)
+  return(pkg_nms)
+}
+
+
+#' Get packages with data.frames
+#'
+#' @return named vector of packages with `data.frame` objects
+#' @export get_pkgs_with_dfs
+#'
+#' @importFrom purrr map_vec
+#'
+#' @examples
+#' get_pkgs_with_dfs()
+get_pkgs_with_dfs <- function() {
+  all_pkgs <- get_search_list_pkgs()
+  df_pkg_set <- purrr::map_vec(.x = all_pkgs, check_df_in_pkg)
+  df_pkgs <- all_pkgs[df_pkg_set]
+  return(df_pkgs)
+}
+
+#' Get names of data.frames from package
+#'
+#' @param pkg
+#'
+#' @return named vector of data.frames in package
+#' @export get_pkg_df_names
+#'
+#' @examples
+#' get_pkg_df_names(pkg = "base")
+#' get_pkg_df_names(pkg = "datasets")
+get_pkg_df_names <- function(pkg) {
+  pkg_pos <- paste0("package:", pkg)
+  pkg_nms <- ls(pkg_pos)
+  data <- lapply(pkg_nms, get, pkg_pos)
+  df_names <- pkg_nms[vapply(data, is.data.frame, logical(1))]
+  if (length(df_names) > 1) {
+    return(df_names)
+  }
+  return(NULL)
 }
 
 #' Get package datasets metadata
@@ -160,6 +215,7 @@ get_pkg_datameta <- function(package, allClass = FALSE,
   # named cols
   ds_cols <- dplyr::select(
     .data = ds,
+    package = Package,
     dataset = Item,
     title = Title,
     dimensions = dim
@@ -170,16 +226,10 @@ get_pkg_datameta <- function(package, allClass = FALSE,
     col = dimensions,
     into = c("obs", "vars"),
     sep = "x",
-    remove = FALSE
-  )
-  # title for app
-  ds_out <- dplyr::mutate(
-    .data = ds_obs_vars,
-    display_title =
-      stringr::str_c(title, " (Rows = ", obs, " , Columns = ", vars, ")")
+    remove = TRUE
   )
   # tibble
-  tbl_out <- tibble::as_tibble(ds_out)
+  tbl_out <- tibble::as_tibble(ds_obs_vars)
   return(tbl_out)
 }
 

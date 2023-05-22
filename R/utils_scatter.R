@@ -190,19 +190,21 @@ gg_color_scatter_facet <- function(df, x_var, y_var, col_var, facet_var, ...) {
     data = df,
     mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]]))
 
-  # build facet layer
-  if (is.null(facet_var)) {
-    facet_layer <- NULL
-  } else {
-    facet_layer <- ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]]))
-  }
-
   # build color layer
   if (is.null(col_var)) {
    col_var <- "#000000"
    color_layer <- ggplot2::geom_point(...)
   } else {
-   color_layer <- ggplot2::geom_point(ggplot2::aes(colour = .data[[col_var]]), ...)
+   color_layer <- ggplot2::geom_point(
+                    # add ... for alpha and size passed to points
+                    ggplot2::aes(colour = .data[[col_var]]), ...)
+  }
+
+  # build facet layer
+  if (is.null(facet_var)) {
+    facet_layer <- NULL
+  } else {
+    facet_layer <- ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]]))
   }
 
   base +

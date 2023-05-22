@@ -15,20 +15,20 @@ mod_scatter_ui <- function(id) {
         width = 12,
         shiny::plotOutput(outputId = ns("scatterplot"))
         )
-      )
-    # # include for showing reactive values: ----
-    # shiny::fluidRow(
-    #   shiny::column(
-    #     width = 6,
-    #     shiny::code("mod_scatter: names(scatter_inputs())"),
-    #     shiny::verbatimTextOutput(ns("vars"))
-    #   ),
-    # # include for showing reactive values: ----
-    # shiny::column(
-    #     width = 6,
-    #     shiny::code("mod_scatter: names(scatter_inputs())"),
-    #     shiny::verbatimTextOutput(ns("plot"))
-    #   ))
+      ),
+    # include for showing reactive values: ----
+    shiny::fluidRow(
+      # shiny::column(
+      #   width = 6,
+      #   shiny::code("mod_scatter: str(scatter_inputs()$df)"),
+      #   shiny::verbatimTextOutput(ns("vars"))
+      # ),
+    # include for showing reactive values: ----
+    shiny::column(
+        width = 12,
+        shiny::code("mod_scatter: str(scatter_inputs())"),
+        shiny::verbatimTextOutput(ns("plot"))
+      ))
   )
 }
 
@@ -48,40 +48,31 @@ mod_scatter_server <- function(id, scatter_inputs) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
-      plot <- shiny::reactive({
-                  req(scatter_inputs())
-                gg_color_scatter_facet(
-                    df = scatter_inputs()$df,
-                    x_var = scatter_inputs()$x_var,
-                    y_var = scatter_inputs()$y_var,
-                    col_var = scatter_inputs()$col_var,
-                    facet_var = scatter_inputs()$facet_var,
-                    alpha = scatter_inputs()$alpha,
-                    size = scatter_inputs()$size)
-                }) |>
-                  shiny::bindEvent(scatter_inputs(),
-                                   ignoreNULL = TRUE,
-                                   ignoreInit = FALSE)
-
-
-      shiny::observe({
-              shiny::req(scatter_inputs())
         output$scatterplot <- shiny::renderPlot({
-          plot()
-          })
-      }) |> shiny::bindEvent(plot(),
-                             ignoreNULL = TRUE,
-                             ignoreInit = TRUE)
+                gg_color_scatter_facet(
+                  df = scatter_inputs()$df,
+                  x_var = scatter_inputs()$x_var,
+                  y_var = scatter_inputs()$y_var,
+                  col_var = scatter_inputs()$col_var,
+                  facet_var = scatter_inputs()$facet_var,
+                  alpha = scatter_inputs()$alpha,
+                  size = scatter_inputs()$size)
+                }) |>
+          shiny::bindEvent(scatter_inputs())
 
-        # # # include for showing reactive values: ----
-        # output$vars <- shiny::renderPrint({
-        #   print(names(scatter_inputs()),
-        #     width = 40, max.levels = NULL)})
-
-
-        # # include for showing reactive values: ----
-        # output$plot <- shiny::renderPrint({
-        # print(names(plot()), width = 40, max.levels = NULL)})
+      # # include for showing reactive values: ----
+      # output$vars <- shiny::renderPrint({
+      #     shiny::req(scatter_inputs())
+      #     print(str(scatter_inputs()$df),
+      #       width = 40,
+      #       max.levels = NULL)
+      #   })
+     # include for showing reactive values: ----
+      output$plot <- shiny::renderPrint({
+        shiny::req(scatter_inputs())
+        print(str(scatter_inputs()),
+          width = 40, max.levels = NULL)
+        })
 
   })
 }

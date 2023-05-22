@@ -17,7 +17,7 @@ shiny server module
 \description{
 Select variables Server module
 }
-\section{Use}{
+\section{Returned object}{
 
 The returned list includes:
 \itemize{
