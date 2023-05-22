@@ -1,5 +1,5 @@
 library(testthat)
-library(testServerAppPkg)
+library(tsap)
 # run utility function tests ----------------------------------------------
 testthat::test_file(path = "tests/testthat/test-pull_binary_cols.R")
 testthat::test_file(path = "tests/testthat/test-get_col_types.R")

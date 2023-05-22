@@ -1,4 +1,4 @@
-Package: testServerAppPkg
+Package: tsap
 Type: Package
 Title: Test Your Shiny Package App server functions
 Version: 0.1.0

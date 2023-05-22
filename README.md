@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `testServerAppPkg`
+# `tsap`
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `testServerAppPkg` is to demonstrate how to build and test a shiny
+The goal of `tsap` is to demonstrate how to build and test a shiny
 application using `usethis`, `shiny::testServer()`, and `shinytest2`.
 
 ## Installation
@@ -19,7 +19,7 @@ it’s contents).
 ## Run the app
 
 ``` r
-testServerAppPkg::pkgDataApp()
+tsap::pkgDataApp()
 ```
 
 # Unit tests

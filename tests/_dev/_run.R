@@ -98,7 +98,7 @@ testthat::test_file("tests/testthat/test-pkgDataApp.R")
 
 # create test-scatterplot-mappings.R -----------------------------------------
 ## in console ------
-# shiny_app <- testServerAppPkg::pkgDataApp()
+# shiny_app <- tsap::pkgDataApp()
 # app <- AppDriver$new(shiny_app, height = 596, width = 1156)
 # put all values in list
 # all_values <- app$get_values()

@@ -3,6 +3,6 @@
 
 pkgload::load_all(export_all = FALSE, helpers = TRUE, attach_testthat = TRUE)
 
-library(testServerAppPkg)
+library(tsap)
 
-testServerAppPkg::pkgDataApp(testing = TRUE)
+tsap::pkgDataApp(testing = TRUE)
