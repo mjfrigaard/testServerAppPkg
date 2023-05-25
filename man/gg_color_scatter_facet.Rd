@@ -4,7 +4,7 @@
 \alias{gg_color_scatter_facet}
 \title{Colored point plot (scatter-plot) with facets}
 \usage{
-gg_color_scatter_facet(df, x_var, y_var, col_var, facet_var, ...)
+gg_color_scatter_facet(df, x_var, y_var, col_var = NULL, facet_var = NULL, ...)
 }
 \arguments{
 \item{df}{input dataset (tibble or data.frame)}
@@ -36,6 +36,17 @@ gg_color_scatter_facet(
   alpha = 1 / 3,
   size = 2
 )
+# compare with
+ggplot2::ggplot(
+  data = palmerpenguins::penguins,
+  mapping = ggplot2::aes(x = bill_length_mm, y = flipper_length_mm)
+) +
+  ggplot2::geom_point(aes(color = island, group = island),
+    size = 2, alpha = 1 / 3
+  ) +
+  ggplot2::facet_wrap(. ~ species) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet(
   df = palmerpenguins::penguins,
   x_var = "bill_length_mm",
@@ -45,6 +56,16 @@ gg_color_scatter_facet(
   alpha = 1 / 3,
   size = 2
 )
+# compare with
+ggplot2::ggplot(
+  data = palmerpenguins::penguins,
+  mapping = ggplot2::aes(x = bill_length_mm, y = flipper_length_mm)
+) +
+  ggplot2::geom_point(aes(color = island, group = island),
+    size = 2, alpha = 1 / 3
+  ) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet(
   df = palmerpenguins::penguins,
   x_var = "bill_length_mm",
@@ -54,4 +75,12 @@ gg_color_scatter_facet(
   alpha = 1 / 3,
   size = 2
 )
+# compare with
+ggplot(
+  data = palmerpenguins::penguins,
+  mapping = ggplot2::aes(x = bill_length_mm, y = flipper_length_mm)
+) +
+  ggplot2::geom_point(size = 2, alpha = 1 / 3) +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(legend.position = "bottom")
 }

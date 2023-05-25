@@ -33,8 +33,8 @@ Check the unit tests for `gg_base()` and `gg_points()` in
 # Shiny server tests
 
 Check the shiny `testServer()` tests for `mod_var_select_server()` and
-`mod_scatter_server()` in
+`mod_scatter_plot_server()` in
 
     #> tests/testthat/
-    #> ├── test-mod_scatter_server.R
+    #> ├── test-mod_scatter_plot_server.R
     #> └── test-mod_var_select_server.R

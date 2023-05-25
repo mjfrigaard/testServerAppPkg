@@ -10,27 +10,23 @@ appUI <- function() {
     shiny::fluidPage(
       shiny::sidebarLayout(
         shiny::sidebarPanel(
-          # data inputs ----
-          # shiny::h4(
-          #   shiny::code("data_input"), " module"),
-          mod_data_input_ui("data")
+          # pkg input ----
+          shiny::h4(
+            shiny::code("pkg input"), " module"),
+          mod_pkg_ui("pkg"),
+          # dataset input  ----
+            shiny::h4(
+              shiny::code("dataset input"), " module"),
+          mod_dataset_ui("ds"),
         ),
         shiny::mainPanel(
           shiny::tags$br(),
-          # var inputs ----
-          shiny::h4(shiny::code("var_select"), " module"),
-          mod_var_select_ui(id = "vars"),
-          # outputs  ----
-          shiny::h4(shiny::code("mod_scatter"), " module"),
-          mod_scatter_ui(id = "plot")
-          ## include for showing reactive values: ----
-          # shiny::fluidRow(
-          #   shiny::column(
-          #     width = 6,
-          #     shiny::h4("Reactive values in ",
-          #           shiny::code("appServer()")),
-          #     shiny::verbatimTextOutput("vals")
-          #   ))
+          # column inputs ----
+          shiny::h4(shiny::code("column select"), " module"),
+          mod_cols_ui(id = "cols"),
+          # plot outputs  ----
+          shiny::h4(shiny::code("scatter plot"), " module"),
+          mod_plot_ui("plot")
         )
       )
     )

@@ -4,19 +4,16 @@
 #'
 #' @export appServer
 appServer <- function(input, output, session) {
+  # pkg module ----
+  pkg <- mod_pkg_server("pkg")
 
-  pkg_dataset <- mod_data_input_server(id = "data")
+  # dataset module ----
+  dataset <- mod_dataset_server("ds", pkg_input = pkg)
 
-  plot_values <-mod_var_select_server(id = "vars",
-                        input_data = pkg_dataset)
+  # column select module ----
+  plot_values <- mod_cols_server(id = "cols", ds_input = dataset)
 
-  mod_scatter_server(id = "plot",
-                     scatter_inputs = plot_values)
-
-  # # include for showing reactive values: ----
-  # output$vals <- shiny::renderPrint({
-  #   shiny::reactiveValuesToList(x = input, all.names = TRUE)
-  # })
-  # # include for showing reactive values: ----
+  # plot module ----
+  mod_plot_server("plot", plot_inputs = plot_values)
 
 }
