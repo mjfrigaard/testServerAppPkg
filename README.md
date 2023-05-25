@@ -22,9 +22,8 @@ it’s contents).
 Check the shiny `testServer()` tests for the modules in
 `tests/testthat/`
 
-``` default
-├── test-mod_pkg_server.R
-├── test-mod_dataset_server.R
-├── test-mod_cols_server.R 
-└── test-mod_plot_server.R
-```
+    #> tests/testthat/
+    #> ├── test-mod_cols_server.R
+    #> ├── test-mod_dataset_server.R
+    #> ├── test-mod_pkg_server.R
+    #> └── test-mod_plot_server.R

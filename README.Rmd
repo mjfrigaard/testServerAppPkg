@@ -30,16 +30,8 @@ Check the shiny `testServer()` tests for the modules in `tests/testthat/`
 
 ```{r}
 #| echo: false
-#| eval: false
-# fs::dir_tree("tests/testthat/")
-```
-
-```{verbatim}
-#| echo: true
-├── test-mod_pkg_server.R
-├── test-mod_dataset_server.R
-├── test-mod_cols_server.R 
-└── test-mod_plot_server.R
+#| eval: true
+fs::dir_tree("tests/testthat/", regexp = "mod")
 ```
 
 
