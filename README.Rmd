@@ -26,11 +26,20 @@ You don't want to install this package, but you might want to download it as an 
 
 # Shiny server tests 
 
-Check the shiny `testServer()` tests for `mod_var_select_server()` and `mod_scatter_plot_server()` in
+Check the shiny `testServer()` tests for the modules in `tests/testthat/`
 
 ```{r}
 #| echo: false
-fs::dir_tree("tests/")
+#| eval: false
+# fs::dir_tree("tests/testthat/")
+```
+
+```{verbatim}
+#| echo: true
+├── test-mod_pkg_server.R
+├── test-mod_dataset_server.R
+├── test-mod_cols_server.R 
+└── test-mod_plot_server.R
 ```
 
 

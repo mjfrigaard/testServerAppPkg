@@ -6,35 +6,25 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of `tsap` is to demonstrate how to build and test a shiny
-application using `usethis`, `shiny::testServer()`, and `shinytest2`.
+The goal of `tsap` is to demonstrate how to test a shiny application
+package using [`testthat`](https://testthat.r-lib.org/) and
+[`shiny::testServer()`](https://search.r-project.org/CRAN/refmans/shiny/html/testServer.html)
 
 ## Installation
 
 You don’t want to install this package, but you might want to download
 it as an example (or read through [this
-post](https://mjfrigaard.github.io/posts/testing-shiny/) to learn about
+post](https://mjfrigaard.github.io/posts/test-shiny-p2/) to learn about
 it’s contents).
-
-## Run the app
-
-``` r
-tsap::pkgDataApp()
-```
-
-# Unit tests
-
-Check the unit tests for `gg_base()` and `gg_points()` in
-
-    #> tests/testthat/
-    #> ├── test-gg_base.R
-    #> └── test-gg_points.R
 
 # Shiny server tests
 
-Check the shiny `testServer()` tests for `mod_var_select_server()` and
-`mod_scatter_plot_server()` in
+Check the shiny `testServer()` tests for the modules in
+`tests/testthat/`
 
-    #> tests/testthat/
-    #> ├── test-mod_scatter_plot_server.R
-    #> └── test-mod_var_select_server.R
+``` default
+├── test-mod_pkg_server.R
+├── test-mod_dataset_server.R
+├── test-mod_cols_server.R 
+└── test-mod_plot_server.R
+```
