@@ -11,11 +11,13 @@ testthat::test_file("tests/testthat/test-pull_numeric_cols.R")
 testthat::test_file("tests/testthat/test-pull_binary_cols.R")
 testthat::test_file("tests/testthat/test-pull_facet_cols.R")
 testthat::test_file("tests/testthat/test-pull_cat_cols.R")
-# or
-# devtools::test()
+
 
 # run module function tests -----------------------------------------------
 testthat::test_file("tests/testthat/test-mod_pkg_server.R")
 testthat::test_file("tests/testthat/test-mod_dataset_server.R")
 testthat::test_file("tests/testthat/test-mod_cols_server.R")
 testthat::test_file("tests/testthat/test-mod_plot_server.R")
+
+# or
+devtools::test()

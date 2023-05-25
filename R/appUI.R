@@ -17,7 +17,7 @@ appUI <- function() {
           # dataset input  ----
             shiny::h4(
               shiny::code("dataset input"), " module"),
-          mod_dataset_ui("ds"),
+          mod_dataset_ui("ds")
         ),
         shiny::mainPanel(
           shiny::tags$br(),

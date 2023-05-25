@@ -13,7 +13,7 @@ mod_plot_ui <- function(id) {
     shiny::fluidRow(
       shiny::column(
         width = 12,
-        shiny::plotOutput(outputId = ns("gg_color_scatter_facet"))
+        shiny::plotOutput(outputId = ns("graph"))
         )
       )
     # # include for showing reactive values: ----
@@ -43,7 +43,7 @@ mod_plot_server <- function(id, plot_inputs) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
-        output$gg_color_scatter_facet <- shiny::renderPlot({
+       plot <- shiny::reactive({
                 gg_color_scatter_facet(
                   df = plot_inputs()$df,
                   x_var = plot_inputs()$x_var,
@@ -52,9 +52,12 @@ mod_plot_server <- function(id, plot_inputs) {
                   facet_var = plot_inputs()$facet_var,
                   alpha = plot_inputs()$alpha,
                   size = plot_inputs()$size)
-                }) |>
-          shiny::bindCache(plot_inputs()) |>
-          shiny::bindEvent(plot_inputs(), ignoreNULL = TRUE)
+        }) |>
+         shiny::bindEvent(plot_inputs(), ignoreNULL = TRUE)
+
+        output$graph <- shiny::renderPlot({ plot() }) |>
+                        shiny::bindCache(plot_inputs())
+
 
      # # include for showing reactive values: ----
      #  output$plot <- shiny::renderPrint({
