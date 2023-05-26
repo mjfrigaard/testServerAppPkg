@@ -27,12 +27,12 @@ mod_pkg_ui <- function(id) {
 #'
 #' @section Using `mod_pkg_server`:
 #'
-#' `mod_pkg` is the intended to be used with `mod_dataset`.
+#' `mod_pkg` is the intended to be used with `mod_ds`.
 #'
 #' ```
 #' pkg <- mod_pkg_server("pkg")
 #'
-#' mod_dataset_server("ds", pkg_input = pkg)
+#' mod_ds_server("ds", pkg_input = pkg)
 #' ```
 #'
 #' @importFrom shiny NS moduleServer reactive req

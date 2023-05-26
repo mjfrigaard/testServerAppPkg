@@ -18,11 +18,11 @@ Package server module
 \section{Using \code{mod_pkg_server}}{
 
 
-\code{mod_pkg} is the intended to be used with \code{mod_dataset}.
+\code{mod_pkg} is the intended to be used with \code{mod_ds}.
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{pkg <- mod_pkg_server("pkg")
 
-mod_dataset_server("ds", pkg_input = pkg)
+mod_ds_server("ds", pkg_input = pkg)
 }\if{html}{\out{</div>}}
 }
 

@@ -1,3 +1,7 @@
+require(palmerpenguins)
+require(NHANES)
+require(testthat)
+require(tsap)
 testthat::test_that("get_col_types() works", {
   col_types_test <- readRDS(testthat::test_path("fixtures", "col_types_test.rds"))
   # test logical class

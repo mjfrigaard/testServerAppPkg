@@ -1,3 +1,7 @@
+require(palmerpenguins)
+require(NHANES)
+require(testthat)
+require(tsap)
 test_that("make_facet_vec() facets work", {
   facet_vec_test <- readRDS(testthat::test_path("fixtures", "facet_vec_test.rds"))
   # test character

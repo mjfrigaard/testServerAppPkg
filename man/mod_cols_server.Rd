@@ -26,7 +26,7 @@ The returned object passed to \code{ds_input} is the result of:
 }\if{html}{\out{</div>}}
 \itemize{
 \item Where \code{pkg_input()} is the return value from \code{mod_pkg_server()}, and
-\code{input$dataset} is the reactive value from \code{mod_dataset_server()}
+\code{input$dataset} is the reactive value from \code{mod_ds_server()}
 }
 }
 

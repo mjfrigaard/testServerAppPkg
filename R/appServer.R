@@ -8,7 +8,7 @@ appServer <- function(input, output, session) {
   pkg <- mod_pkg_server("pkg")
 
   # dataset module ----
-  dataset <- mod_dataset_server("ds", pkg_input = pkg)
+  dataset <- mod_ds_server("ds", pkg_input = pkg)
 
   # column select module ----
   plot_values <- mod_cols_server(id = "cols", ds_input = dataset)

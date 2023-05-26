@@ -1,3 +1,7 @@
+require(palmerpenguins)
+require(NHANES)
+require(testthat)
+require(tsap)
 test_that("make_binary_vec() logical works", {
   binary_vec_test <- readRDS(testthat::test_path("fixtures", "binary_vec_test.rds"))
   # test logical

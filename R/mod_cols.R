@@ -80,7 +80,7 @@ mod_cols_ui <- function(id) {
 #' ```
 #'
 #' * Where `pkg_input()` is the return value from `mod_pkg_server()`, and
-#' `input$dataset` is the reactive value from `mod_dataset_server()`
+#' `input$dataset` is the reactive value from `mod_ds_server()`
 #'
 #'
 #' @return shiny server module
@@ -147,9 +147,13 @@ mod_cols_server <- function(id, ds_input) {
       shiny::bindEvent(pkg_data(),
         ignoreNULL = TRUE)
 
-      return(
+       return(
           shiny::reactive({
-            shiny::req(c(input$x, input$y, input$col, input$facet))
+            shiny::req(c(ds_input(),
+                         input$x, input$y,
+                         input$col, input$facet,
+                         input$alpha, input$size))
+
             list(
               df = janitor::clean_names(ds_input()),
               x_var = input$x,
@@ -159,13 +163,17 @@ mod_cols_server <- function(id, ds_input) {
               alpha = input$alpha,
               size = input$size)
             }) |>
-          shiny::bindCache(c(ds_input(), input$x, input$y,
+          # bind to cache
+          shiny::bindCache(c(ds_input(),
+                             input$x, input$y,
                              input$col, input$facet,
                              input$alpha, input$size)) |>
-          shiny::bindEvent(c(ds_input(), input$x, input$y,
-                              input$col, input$facet,
-                            input$alpha, input$size))
-      )
+          # bind to event
+          shiny::bindEvent(c(ds_input(),
+                             input$x, input$y,
+                             input$col, input$facet,
+                             input$alpha, input$size))
+        )
 
   })
 }

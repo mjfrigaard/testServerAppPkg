@@ -1,3 +1,7 @@
+require(palmerpenguins)
+require(NHANES)
+require(testthat)
+require(tsap)
 test_that("check_facet_vec() character", {
   # test character (5 unique values)
   chr_test <- check_facet_vec(

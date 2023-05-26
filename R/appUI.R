@@ -11,21 +11,23 @@ appUI <- function() {
       shiny::sidebarLayout(
         shiny::sidebarPanel(
           # pkg input ----
-          shiny::h4(
-            shiny::code("pkg input"), " module"),
+          # shiny::h4(
+          #   shiny::code("pkg input"), " module"),
           mod_pkg_ui("pkg"),
           # dataset input  ----
-            shiny::h4(
-              shiny::code("dataset input"), " module"),
-          mod_dataset_ui("ds")
+            # shiny::h4(
+            #   shiny::code("dataset input"), " module"),
+          mod_ds_ui("ds")
         ),
         shiny::mainPanel(
           shiny::tags$br(),
           # column inputs ----
-          shiny::h4(shiny::code("column select"), " module"),
+          # shiny::h4(
+          #   shiny::code("column select"), " module"),
           mod_cols_ui(id = "cols"),
           # plot outputs  ----
-          shiny::h4(shiny::code("scatter plot"), " module"),
+          # shiny::h4(
+          #   shiny::code("scatter plot"), " module"),
           mod_plot_ui("plot")
         )
       )

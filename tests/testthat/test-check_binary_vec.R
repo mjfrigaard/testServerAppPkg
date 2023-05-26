@@ -1,3 +1,7 @@
+require(palmerpenguins)
+require(NHANES)
+require(testthat)
+require(tsap)
 test_that("check_binary_vec logical works", {
   # test logical
   expect_equal(

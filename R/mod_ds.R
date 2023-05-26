@@ -3,18 +3,18 @@
 #' @param id module id
 #'
 #' @return shiny UI module
-#' @export mod_dataset_ui
+#' @export mod_ds_ui
 #'
 #' @importFrom shiny NS tagList selectInput code p verbatimTextOutput
 #'
-mod_dataset_ui <- function(id) {
+mod_ds_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
   shiny::selectInput(ns("dataset"),
     label = "Pick a dataset",
     choices = NULL)
     # # include for showing reactive values: ----
-    # shiny::code("mod_dataset:"),
+    # shiny::code("mod_ds:"),
     # shiny::p(shiny::code("list(pkg = pkg_input(),")),
     # shiny::p(shiny::code("ds = input$dataset)")),
     # shiny::verbatimTextOutput(
@@ -30,7 +30,7 @@ mod_dataset_ui <- function(id) {
 #' @param pkg_input selected package
 #'
 #' @return shiny server module
-#' @export mod_dataset_server
+#' @export mod_ds_server
 #'
 #'
 #' @section Returned object (`pkg_input`):
@@ -39,18 +39,18 @@ mod_dataset_ui <- function(id) {
 #' `get_pkgs_with_dfs()`, which returns a character vector of all packages with
 #' a `data.frame` or `tibble` in their exports.
 #'
-#' `mod_pkg_server` is the precursor to `mod_dataset_server`, and is intended
+#' `mod_pkg_server` is the precursor to `mod_ds_server`, and is intended
 #' to be return a character vector of packages (see example below):
 #'
 #' ```
 #' pkg <- mod_pkg_server("pkg")
 #'
-#' mod_dataset_server("ds", pkg_input = pkg)
+#' mod_ds_server("ds", pkg_input = pkg)
 #' ```
 #'
 #' @importFrom shiny req moduleServer reactive
 #' @importFrom shiny renderPrint observe bindEvent bindCache
-mod_dataset_server <- function(id, pkg_input) {
+mod_ds_server <- function(id, pkg_input) {
 
   shiny::moduleServer(id, function(input, output, session) {
 

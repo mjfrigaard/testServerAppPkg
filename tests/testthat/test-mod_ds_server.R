@@ -1,12 +1,9 @@
-# shiny::testServer(mod_dataset_server,
-#   args = list(pkg_input = "palmerpenguins"), expr = {
-#     # Test 1: check initial value -----
-#   testthat::expect_equal(
-#     object = get_pkg_df_names(pkg_input()),
-#     expected = c("penguins", "penguins_raw"))
-#   cat("\nTest 1 pkg_input() = 'palmerpenguins': >>", pkg_input(), "\n")
-# })
-shiny::testServer(mod_dataset_server,
+# for testing these need to be on the search list!
+require(palmerpenguins)
+require(NHANES)
+require(testthat)
+require(tsap)
+shiny::testServer(mod_ds_server,
   args = list(pkg_input = reactive("palmerpenguins")), expr = {
     # Test 1: check initial value -----
   testthat::expect_equal(
@@ -27,7 +24,7 @@ shiny::testServer(mod_dataset_server,
   cat("\nTest 3 class = tibble/data.frame: >>", class(session$returned()), "\n")
 })
 
-shiny::testServer(mod_dataset_server,
+shiny::testServer(mod_ds_server,
   args = list(pkg_input = reactive("NHANES")), expr = {
     # Test 1: check initial value -----
   testthat::expect_equal(

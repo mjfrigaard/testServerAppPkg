@@ -20,8 +20,13 @@ Suggests:
 Config/testthat/edition: 3
 VignetteBuilder: knitr
 Imports: 
+    dplyr,
     ggplot2,
+    janitor,
+    NHANES,
+    palmerpenguins,
     shiny,
     stringr,
     testthat,
-    vdiffr
+    vdiffr,
+    zeallot

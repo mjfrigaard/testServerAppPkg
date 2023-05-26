@@ -27,10 +27,13 @@ mod_plot_ui <- function(id) {
   )
 }
 
+
+
 #' Plot server module
 #'
 #' @param id module id
-#' @param scatter_inputs inputs from mod_var_select
+#' @param cols columns from `mod_cols`
+#' @param df `data.frame` from `mod_ds`
 #'
 #' @return shiny server module
 #' @export mod_plot_server
@@ -53,11 +56,14 @@ mod_plot_server <- function(id, plot_inputs) {
                   alpha = plot_inputs()$alpha,
                   size = plot_inputs()$size)
         }) |>
-         shiny::bindEvent(plot_inputs(), ignoreNULL = TRUE)
+         shiny::bindEvent(plot_inputs(),
+           ignoreNULL = TRUE)
 
         output$graph <- shiny::renderPlot({ plot() }) |>
-                        shiny::bindCache(plot_inputs())
-
+                        shiny::bindCache(plot_inputs(), plot()) |>
+                        shiny::bindEvent(plot(),
+                                         ignoreNULL = TRUE,
+                                         ignoreInit = TRUE)
 
      # # include for showing reactive values: ----
      #  output$plot <- shiny::renderPrint({
@@ -68,3 +74,13 @@ mod_plot_server <- function(id, plot_inputs) {
 
   })
 }
+
+
+
+
+
+
+
+
+
+

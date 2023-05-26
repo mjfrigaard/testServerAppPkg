@@ -9,7 +9,9 @@ mod_plot_server(id, plot_inputs)
 \arguments{
 \item{id}{module id}
 
-\item{scatter_inputs}{inputs from mod_var_select}
+\item{cols}{columns from \code{mod_cols}}
+
+\item{df}{\code{data.frame} from \code{mod_ds}}
 }
 \value{
 shiny server module
