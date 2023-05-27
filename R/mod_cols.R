@@ -53,15 +53,6 @@ mod_cols_ui <- function(id) {
         )
       )
     )
-    # ## include these for showing reactive values to include in tests:  ----
-    # shiny::fluidRow(
-    #   shiny::column(
-    #     width = 12,
-    #     shiny::code("mod_cols: "),
-    #     shiny::p(shiny::code("str(pkg_data())")),
-    #     shiny::verbatimTextOutput(outputId = ns("return"))
-    #   )
-    # )
   )
 }
 
@@ -99,13 +90,6 @@ mod_cols_server <- function(id, ds_input) {
                       }) |>
                 shiny::bindEvent(ds_input(),
                   ignoreNULL = TRUE)
-
-    # # include for showing reactive values: ----
-    # output$return <- shiny::renderPrint({
-    #   print(str(pkg_data()),
-    #     width = 40,
-    #     max.levels = NULL)
-    # })
 
     shiny::observe({
       num_vars <- pull_numeric_cols(df = pkg_data())

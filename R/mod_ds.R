@@ -13,14 +13,6 @@ mod_ds_ui <- function(id) {
   shiny::selectInput(ns("dataset"),
     label = "Pick a dataset",
     choices = NULL)
-    # # include for showing reactive values: ----
-    # shiny::code("mod_ds:"),
-    # shiny::p(shiny::code("list(pkg = pkg_input(),")),
-    # shiny::p(shiny::code("ds = input$dataset)")),
-    # shiny::verbatimTextOutput(
-    #   ns("vals")
-    #   )
-
     )
 }
 
@@ -54,14 +46,6 @@ mod_ds_server <- function(id, pkg_input) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
-    # # include for showing reactive values: ----
-    # output$vals <- shiny::renderPrint({
-    #   print(
-    #   list(pkg = pkg_input(), ds = input$dataset),
-    #     width = 40,
-    #     max.levels = NULL)
-    # })
-
      shiny::observe({
       df_names <- get_pkg_df_names(pkg = pkg_input())
       shiny::updateSelectInput(session = session,
@@ -78,8 +62,6 @@ mod_ds_server <- function(id, pkg_input) {
                 }) |>
                   shiny::bindCache(c(pkg_input(), input$dataset)) |>
                   shiny::bindEvent(input$dataset)
-
-
 
   })
 }

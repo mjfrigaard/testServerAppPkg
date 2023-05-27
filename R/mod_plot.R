@@ -16,14 +16,6 @@ mod_plot_ui <- function(id) {
         shiny::plotOutput(outputId = ns("graph"))
         )
       )
-    # # include for showing reactive values: ----
-    # shiny::fluidRow(
-    #   shiny::column(
-    #       width = 12,
-    #       shiny::code("mod_plot: str(plot_inputs())"),
-    #       shiny::verbatimTextOutput(ns("plot"))
-    #     )
-    #   )
   )
 }
 
@@ -64,13 +56,6 @@ mod_plot_server <- function(id, plot_inputs) {
                         shiny::bindEvent(plot(),
                                          ignoreNULL = TRUE,
                                          ignoreInit = TRUE)
-
-     # # include for showing reactive values: ----
-     #  output$plot <- shiny::renderPrint({
-     #    shiny::req(plot_inputs())
-     #    print(str(plot_inputs()),
-     #      width = 40, max.levels = NULL)
-     #    })
 
   })
 }
