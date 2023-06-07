@@ -13,7 +13,11 @@ vignette: >
 #| eval: true
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width = 5,
+  fig.height = 3.5,
+  dpi = 140,
+  fig.retina = TRUE
 )
 ```
 
@@ -40,8 +44,8 @@ In theory, this would work like so:
 ```{r}
 # get packages with data.frames/tibbles
 pkgs <- get_pkgs_with_dfs()
-# select arbitrary package with data.frames/tibbles
-pkg <- pkgs[2]
+# select package with data.frames/tibbles
+pkg <- pkgs["palmerpenguins"]
 pkg 
 ```
 
@@ -73,9 +77,9 @@ col_var <- pull_binary_cols(pkg_data)[1]
 # get facet var 
 facet_var <- pull_facet_cols(pkg_data)[1]
 # set size 
-size <- 3L
+size <- 2L
 # set alpha 
-alpha <- 0.5
+alpha <- 0.75
 # create list of plot_values 
 plot_values <- list(
   'df' = pkg_data,
@@ -117,7 +121,7 @@ plot
 
 When switching data sources (i.e., `palmerpenguins::penguins_raw` to `NHANES::NHANES`), the graph in the application renders with the following error: 
 
-`# Warning: Error in [[: Column `race1` not found in `.data`.`
+`# Warning: Error in [[: Column 'race1' not found in '.data'.`
 
 ```{r}
 #| error: true
