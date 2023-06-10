@@ -20,9 +20,19 @@ String for plot title
 Make x, y, color plot title
 }
 \examples{
-make_x_y_color_title(
-  x = "imdb_rating",
-  y = "audience_score",
-  color = "mpaa_rating"
-)
+diamonds <- ggplot2::diamonds
+mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
+gg_color_scatter(
+  df = mini_dmnds,
+  x_var = "carat",
+  y_var = "price",
+  col_var = "cut",
+  alpha = 1 / 3,
+  size = 2
+) +
+ggplot2::labs(title =
+  make_x_y_color_title(
+    x = "carat",
+    y = "price",
+   color = "cut"))
 }

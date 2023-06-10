@@ -20,7 +20,7 @@ plot object
 Base plot (ggplot2)
 }
 \examples{
-require(palmerpenguins)
-penguins <- palmerpenguins::penguins
-gg_base(df = penguins, x_var = "bill_length_mm", y_var = "body_mass_g")
+diamonds <- ggplot2::diamonds
+mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
+gg_base(df = mini_dmnds, x_var = "carat", y_var = "price")
 }

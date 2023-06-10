@@ -26,59 +26,60 @@ A \code{ggplot2} plot object
 Colored point plot (scatter-plot) with facets
 }
 \examples{
-require(palmerpenguins)
+diamonds <- ggplot2::diamonds
+mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
 gg_color_scatter_facet(
-  df = palmerpenguins::penguins,
-  x_var = "bill_length_mm",
-  y_var = "flipper_length_mm",
-  col_var = "island",
-  facet_var = "species",
+  df = mini_dmnds,
+  x_var = "carat",
+  y_var = "price",
+  col_var = "cut",
+  facet_var = "cut",
   alpha = 1 / 3,
   size = 2
 )
 # compare with
 ggplot2::ggplot(
-  data = palmerpenguins::penguins,
-  mapping = ggplot2::aes(x = bill_length_mm, y = flipper_length_mm)
+  data = mini_dmnds,
+  mapping = ggplot2::aes(x = carat, y = price)
 ) +
-  ggplot2::geom_point(aes(color = island, group = island),
+  ggplot2::geom_point(ggplot2::aes(color = cut, group = cut),
     size = 2, alpha = 1 / 3
   ) +
-  ggplot2::facet_wrap(. ~ species) +
+  ggplot2::facet_wrap(. ~ cut) +
   ggplot2::theme_minimal() +
   ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet(
-  df = palmerpenguins::penguins,
-  x_var = "bill_length_mm",
-  y_var = "flipper_length_mm",
-  col_var = "island",
+  df = mini_dmnds,
+  x_var = "carat",
+  y_var = "price",
+  col_var = "cut",
   facet_var = NULL,
   alpha = 1 / 3,
   size = 2
 )
 # compare with
 ggplot2::ggplot(
-  data = palmerpenguins::penguins,
-  mapping = ggplot2::aes(x = bill_length_mm, y = flipper_length_mm)
+  data = mini_dmnds,
+  mapping = ggplot2::aes(x = carat, y = price)
 ) +
-  ggplot2::geom_point(aes(color = island, group = island),
+  ggplot2::geom_point(aes(color = cut, group = cut),
     size = 2, alpha = 1 / 3
   ) +
   ggplot2::theme_minimal() +
   ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet(
-  df = palmerpenguins::penguins,
-  x_var = "bill_length_mm",
-  y_var = "flipper_length_mm",
+  df = mini_dmnds,
+  x_var = "carat",
+  y_var = "price",
   col_var = NULL,
   facet_var = NULL,
   alpha = 1 / 3,
   size = 2
 )
 # compare with
-ggplot(
-  data = palmerpenguins::penguins,
-  mapping = ggplot2::aes(x = bill_length_mm, y = flipper_length_mm)
+ggplot2::ggplot(
+  data = mini_dmnds,
+  mapping = ggplot2::aes(x = carat, y = price)
 ) +
   ggplot2::geom_point(size = 2, alpha = 1 / 3) +
   ggplot2::theme_minimal() +

@@ -1,8 +1,8 @@
 ---
-title: "scatter-plots"
+title: "Scatter plots"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{scatter-plots}
+  %\VignetteIndexEntry{Scatter plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,8 +23,8 @@ knitr::opts_chunk$set(
 
 ```{r}
 #| label: pkgs
-#| messages: false
-#| warnings: false
+#| message: false
+#| warning: false
 library(tsap)
 library(janitor)
 library(NHANES)
@@ -33,7 +33,7 @@ library(palmerpenguins)
 
 # Building scatter-plots 
 
-The graphs in tsap are built 'layer-by-layer', which poses a problem for the module sequence:
+The graphs in `tsap` are built 'layer-by-layer', which poses a problem for the module sequence:
 
 `mod_pkg` > `mod_ds` > `mod_cols` > `mod_plot` 
 

@@ -24,13 +24,13 @@ A \code{ggplot2} plot object
 Colored point plot (scatter-plot)
 }
 \examples{
-require(palmerpenguins)
-penguins <- palmerpenguins::penguins
+diamonds <- ggplot2::diamonds
+mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
 gg_color_scatter(
-  df = penguins,
-  x_var = "bill_length_mm",
-  y_var = "body_mass_g",
-  col_var = "species",
+  df = mini_dmnds,
+  x_var = "carat",
+  y_var = "price",
+  col_var = "cut",
   alpha = 1 / 3,
   size = 2
 )

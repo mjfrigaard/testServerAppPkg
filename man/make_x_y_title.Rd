@@ -20,8 +20,8 @@ String for plot title
 Make x,y plot title
 }
 \examples{
-make_x_y_title(
-  x = "imdb_rating",
-  y = "audience_score"
-)
+diamonds <- ggplot2::diamonds
+mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
+gg_base(df = mini_dmnds, x_var = "carat", y_var = "price") +
+ggplot2::labs(title = make_x_y_title(x = "carat", y = "price"))
 }

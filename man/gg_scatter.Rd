@@ -22,12 +22,12 @@ A \code{ggplot2} plot object
 Point plot (scatter-plot)
 }
 \examples{
-require(palmerpenguins)
-penguins <- palmerpenguins::penguins
+diamonds <- ggplot2::diamonds
+mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
 gg_scatter(
-  df = penguins,
-  x_var = "bill_length_mm",
-  y_var = "body_mass_g",
+  df = mini_dmnds,
+  x_var = "carat",
+  y_var = "price",
   alpha = 1 / 3,
   color = "#000000",
   size = 2
