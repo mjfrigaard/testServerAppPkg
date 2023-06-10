@@ -283,7 +283,7 @@ make_x_y_col_facet_title <- function(x, y, color, facets) {
 #'   data = mini_dmnds,
 #'   mapping = ggplot2::aes(x = carat, y = price)
 #' ) +
-#'   ggplot2::geom_point(aes(color = cut, group = cut),
+#'   ggplot2::geom_point(ggplot2::aes(color = cut, group = cut),
 #'     size = 2, alpha = 1 / 3
 #'   ) +
 #'   ggplot2::theme_minimal() +
@@ -306,7 +306,6 @@ make_x_y_col_facet_title <- function(x, y, color, facets) {
 #'   ggplot2::theme_minimal() +
 #'   ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var = NULL, ...) {
-
 
   if (!is.null(col_var) & !is.null(facet_var)) {
 

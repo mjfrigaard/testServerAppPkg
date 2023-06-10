@@ -62,7 +62,7 @@ ggplot2::ggplot(
   data = mini_dmnds,
   mapping = ggplot2::aes(x = carat, y = price)
 ) +
-  ggplot2::geom_point(aes(color = cut, group = cut),
+  ggplot2::geom_point(ggplot2::aes(color = cut, group = cut),
     size = 2, alpha = 1 / 3
   ) +
   ggplot2::theme_minimal() +
