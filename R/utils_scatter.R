@@ -307,6 +307,7 @@ make_x_y_col_facet_title <- function(x, y, color, facets) {
 #'   ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var = NULL, ...) {
 
+  # has both color and facet vars
   if (!is.null(col_var) & !is.null(facet_var)) {
 
     ggplot2::ggplot(
@@ -342,6 +343,7 @@ gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var =
       ggplot2::theme_minimal() +
       ggplot2::theme(legend.position = "bottom")
 
+  # no facet, but has color
   } else if (!is.null(col_var) & is.null(facet_var)) {
 
     ggplot2::ggplot(
@@ -368,7 +370,32 @@ gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var =
       ggplot2::theme_minimal() +
       ggplot2::theme(legend.position = "bottom")
 
-  } else if (is.null(col_var) & is.null(facet_var)) {
+    # no color, with facet
+  } else if (is.null(col_var) & !is.null(facet_var)) {
+
+    ggplot2::ggplot(
+      data = df,
+      mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
+    ) +
+      # add ... for alpha and size passed to points
+      ggplot2::geom_point(...) +
+      # add facet layer
+      ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]])) +
+      # add labels
+      ggplot2::labs(
+        title = make_x_y_title(x = x_var, y = y_var),
+        x = stringr::str_replace_all(
+          snakecase::to_title_case(x_var), "_", " "
+        ),
+        y = stringr::str_replace_all(
+          snakecase::to_title_case(y_var), "_", " "
+        )
+      ) +
+      ggplot2::theme_minimal() +
+      ggplot2::theme(legend.position = "bottom")
+
+    # both color and facet are missing
+  } else {
 
     ggplot2::ggplot(
       data = df,
@@ -388,23 +415,5 @@ gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var =
       ggplot2::theme_minimal() +
       ggplot2::theme(legend.position = "bottom")
 
-  } else {
-
-    ggplot2::ggplot(
-      data = df,
-      mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
-    ) +
-      # add labels
-      ggplot2::labs(
-        title = make_x_y_title(x = x_var, y = y_var),
-        x = stringr::str_replace_all(
-          snakecase::to_title_case(x_var), "_", " "
-        ),
-        y = stringr::str_replace_all(
-          snakecase::to_title_case(y_var), "_", " "
-        )
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(legend.position = "bottom")
   }
 }
