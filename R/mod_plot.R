@@ -15,6 +15,12 @@ mod_plot_ui <- function(id) {
         width = 12,
         shiny::plotOutput(outputId = ns("graph"))
         )
+      ),
+    shiny::fluidRow(
+      shiny::column(
+        width = 12,
+        shiny::verbatimTextOutput(ns("vals"))
+      )
       )
   )
 }

@@ -305,7 +305,10 @@ make_x_y_col_facet_title <- function(x, y, color, facets) {
 #'   ggplot2::geom_point(size = 2, alpha = 1 / 3) +
 #'   ggplot2::theme_minimal() +
 #'   ggplot2::theme(legend.position = "bottom")
-gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var = NULL, ...) {
+gg_color_scatter_facet <- function(df, x_var, y_var,
+                                   col_var = NULL, facet_var = NULL,
+                                   ...) {
+
 
   # has both color and facet vars
   if (!is.null(col_var) & !is.null(facet_var)) {
@@ -416,4 +419,20 @@ gg_color_scatter_facet <- function(df, x_var, y_var, col_var = NULL, facet_var =
       ggplot2::theme(legend.position = "bottom")
 
   }
+
 }
+
+
+# debug gg_color_scatter_facet ----------------------------------
+
+# diamonds <- ggplot2::diamonds
+# mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
+# gg_color_scatter_facet(
+#   df = mini_dmnds,
+#   x_var = "carat",
+#   y_var = "price",
+#   col_var = NULL,
+#   facet_var = "cut",
+#   alpha = 1 / 3,
+#   size = 2
+# )
