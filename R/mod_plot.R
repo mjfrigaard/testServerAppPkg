@@ -11,21 +11,13 @@ mod_plot_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
     shiny::fluidRow(
-      shiny::column(
-        width = 12,
-        shiny::plotOutput(outputId = ns("graph"))
+      shiny::column(width = 12,
+        shiny::plotOutput(outputId = ns("graph")
+          )
         )
-      ),
-    shiny::fluidRow(
-      shiny::column(
-        width = 12,
-        shiny::verbatimTextOutput(ns("vals"))
       )
-      )
-  )
+    )
 }
-
-
 
 #' Plot server module
 #'
@@ -53,15 +45,16 @@ mod_plot_server <- function(id, plot_inputs) {
                   facet_var = plot_inputs()$facet_var,
                   alpha = plot_inputs()$alpha,
                   size = plot_inputs()$size)
-        }) |>
-         shiny::bindEvent(plot_inputs(),
-           ignoreNULL = TRUE)
+          }) |>
+            shiny::bindEvent(plot_inputs(),
+                             ignoreNULL = TRUE)
 
-        output$graph <- shiny::renderPlot({ plot() }) |>
-                        shiny::bindCache(plot_inputs(), plot()) |>
-                        shiny::bindEvent(plot(),
-                                         ignoreNULL = TRUE,
-                                         ignoreInit = TRUE)
+       shiny::observe({
+           output$graph <- shiny::renderPlot({ plot() })
+       }) |>
+          shiny::bindEvent(plot(),
+                           ignoreNULL = TRUE,
+                           ignoreInit = TRUE)
 
   })
 }

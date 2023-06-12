@@ -241,6 +241,7 @@ make_x_y_col_facet_title <- function(x, y, color, facets) {
 #' @param ... other arguments passed to (`ggplot2::facet_wrap(vars())`)
 #'
 #' @return A `ggplot2` plot object
+#'
 #' @export gg_color_scatter_facet
 #'
 #' @importFrom ggplot2 ggplot aes vars facet_wrap geom_point labs
@@ -306,120 +307,128 @@ make_x_y_col_facet_title <- function(x, y, color, facets) {
 #'   ggplot2::theme_minimal() +
 #'   ggplot2::theme(legend.position = "bottom")
 gg_color_scatter_facet <- function(df, x_var, y_var,
-                                   col_var = NULL, facet_var = NULL,
-                                   ...) {
-
-
-  # has both color and facet vars
-  if (!is.null(col_var) & !is.null(facet_var)) {
-
-    ggplot2::ggplot(
-      data = df,
-      mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
-    ) +
-      # points layer
-      # add ... for alpha and size passed to points
-      ggplot2::geom_point(
-        ggplot2::aes(colour = .data[[col_var]], group = .data[[col_var]]), ...
+                                col_var = NULL, facet_var = NULL,
+                                ...) {
+  # missing both color and facet vars
+  if (is.null(col_var) & is.null(facet_var)) {
+    if (sum(c(x_var, y_var) %in% names(df)) == 2) {
+      ggplot2::ggplot(
+        data = df,
+        mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
       ) +
-      # add facet layer
-      ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]])) +
-      # add labels
-      ggplot2::labs(
-        title = make_x_y_col_facet_title(
-          x = x_var, y = y_var,
-          color = col_var, facets = facet_var
-        ),
-        x = stringr::str_replace_all(
-          snakecase::to_title_case(x_var), "_", " "
-        ),
-        y = stringr::str_replace_all(
-          snakecase::to_title_case(y_var), "_", " "
-        ),
-        color = stringr::str_replace_all(
-          snakecase::to_title_case(col_var), "_", " "
-        ),
-        group = stringr::str_replace_all(
-          snakecase::to_title_case(facet_var), "_", " "
-        )
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(legend.position = "bottom")
+        ggplot2::geom_point(...) +
+        # add labels
+        ggplot2::labs(
+          title = make_x_y_title(x = x_var, y = y_var),
+          x = stringr::str_replace_all(
+            snakecase::to_title_case(x_var), "_", " "
+          ),
+          y = stringr::str_replace_all(
+            snakecase::to_title_case(y_var), "_", " "
+          )
+        ) +
+        ggplot2::theme_minimal() +
+        ggplot2::theme(legend.position = "bottom")
+    } else {
+      NULL
+    }
 
-  # no facet, but has color
+
+    # no facet, but has color
   } else if (!is.null(col_var) & is.null(facet_var)) {
-
-    ggplot2::ggplot(
-      data = df,
-      mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
-    ) +
-      # add ... for alpha and size passed to points
-      ggplot2::geom_point(
-        ggplot2::aes(colour = .data[[col_var]], group = .data[[col_var]]), ...
+    if (sum(c(x_var, y_var, col_var) %in% names(df)) == 3) {
+      ggplot2::ggplot(
+        data = df,
+        mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
       ) +
-      # add labels
-      ggplot2::labs(
-        title = make_x_y_color_title(x = x_var, y = y_var, color = col_var),
-        x = stringr::str_replace_all(
-          snakecase::to_title_case(x_var), "_", " "
-        ),
-        y = stringr::str_replace_all(
-          snakecase::to_title_case(y_var), "_", " "
-        ),
-        color = stringr::str_replace_all(
-          snakecase::to_title_case(col_var), "_", " "
-        )
-      ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(legend.position = "bottom")
+        # add ... for alpha and size passed to points
+        ggplot2::geom_point(
+          ggplot2::aes(colour = .data[[col_var]], group = .data[[col_var]]), ...
+        ) +
+        # add labels
+        ggplot2::labs(
+          title = make_x_y_color_title(x = x_var, y = y_var, color = col_var),
+          x = stringr::str_replace_all(
+            snakecase::to_title_case(x_var), "_", " "
+          ),
+          y = stringr::str_replace_all(
+            snakecase::to_title_case(y_var), "_", " "
+          ),
+          color = stringr::str_replace_all(
+            snakecase::to_title_case(col_var), "_", " "
+          )
+        ) +
+        ggplot2::theme_minimal() +
+        ggplot2::theme(legend.position = "bottom")
+    } else {
+      NULL
+    }
 
-    # no color, with facet
+    # no color, but has facet
   } else if (is.null(col_var) & !is.null(facet_var)) {
-
-    ggplot2::ggplot(
-      data = df,
-      mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
-    ) +
-      # add ... for alpha and size passed to points
-      ggplot2::geom_point(...) +
-      # add facet layer
-      ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]])) +
-      # add labels
-      ggplot2::labs(
-        title = make_x_y_title(x = x_var, y = y_var),
-        x = stringr::str_replace_all(
-          snakecase::to_title_case(x_var), "_", " "
-        ),
-        y = stringr::str_replace_all(
-          snakecase::to_title_case(y_var), "_", " "
-        )
+    if (sum(c(x_var, y_var, facet_var) %in% names(df)) == 3) {
+      ggplot2::ggplot(
+        data = df,
+        mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
       ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(legend.position = "bottom")
-
-    # both color and facet are missing
+        # add ... for alpha and size passed to points
+        ggplot2::geom_point(...) +
+        # add facet layer
+        ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]])) +
+        # add labels
+        ggplot2::labs(
+          title = make_x_y_title(x = x_var, y = y_var),
+          x = stringr::str_replace_all(
+            snakecase::to_title_case(x_var), "_", " "
+          ),
+          y = stringr::str_replace_all(
+            snakecase::to_title_case(y_var), "_", " "
+          )
+        ) +
+        ggplot2::theme_minimal() +
+        ggplot2::theme(legend.position = "bottom")
+    } else {
+      NULL
+    }
   } else {
-
-    ggplot2::ggplot(
-      data = df,
-      mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
-    ) +
-      ggplot2::geom_point(...) +
-      # add labels
-      ggplot2::labs(
-        title = make_x_y_title(x = x_var, y = y_var),
-        x = stringr::str_replace_all(
-          snakecase::to_title_case(x_var), "_", " "
-        ),
-        y = stringr::str_replace_all(
-          snakecase::to_title_case(y_var), "_", " "
-        )
+    if (sum(c(x_var, y_var, col_var, facet_var) %in% names(df)) == 4) {
+      # missing both color and facet vars
+      ggplot2::ggplot(
+        data = df,
+        mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
       ) +
-      ggplot2::theme_minimal() +
-      ggplot2::theme(legend.position = "bottom")
-
+        # points layer
+        # add ... for alpha and size passed to points
+        ggplot2::geom_point(
+          ggplot2::aes(colour = .data[[col_var]], group = .data[[col_var]]), ...
+        ) +
+        # add facet layer
+        ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]])) +
+        # add labels
+        ggplot2::labs(
+          title = make_x_y_col_facet_title(
+            x = x_var, y = y_var,
+            color = col_var, facets = facet_var
+          ),
+          x = stringr::str_replace_all(
+            snakecase::to_title_case(x_var), "_", " "
+          ),
+          y = stringr::str_replace_all(
+            snakecase::to_title_case(y_var), "_", " "
+          ),
+          color = stringr::str_replace_all(
+            snakecase::to_title_case(col_var), "_", " "
+          ),
+          group = stringr::str_replace_all(
+            snakecase::to_title_case(facet_var), "_", " "
+          )
+        ) +
+        ggplot2::theme_minimal() +
+        ggplot2::theme(legend.position = "bottom")
+    } else {
+      NULL
+    }
   }
-
 }
 
 

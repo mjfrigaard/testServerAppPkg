@@ -98,6 +98,16 @@
       ],
       "Hash": "e8a22846fff485f0be3770c2da758713"
     },
+    "attempt": {
+      "Package": "attempt",
+      "Version": "0.3.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rlang"
+      ],
+      "Hash": "d7421bb5dfeb2676b9e4a5a60c2fcfd2"
+    },
     "backports": {
       "Package": "backports",
       "Version": "1.4.1",
@@ -404,6 +414,22 @@
         "methods"
       ],
       "Hash": "94af08e0aa9675a16fadbb3aaaa90d2a"
+    },
+    "gargoyle": {
+      "Package": "gargoyle",
+      "Version": "0.0.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "ColinFay",
+      "RemoteRepo": "gargoyle",
+      "RemoteRef": "master",
+      "RemoteSha": "83234de417b9b0b39be9b8f1556e5df1968624b2",
+      "Requirements": [
+        "attempt",
+        "shiny"
+      ],
+      "Hash": "3d6d52fc8522ff4bbef4245815b364ee"
     },
     "generics": {
       "Package": "generics",
