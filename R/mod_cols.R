@@ -133,11 +133,6 @@ mod_cols_server <- function(id, ds_input) {
 
        return(
           shiny::reactive({
-            shiny::req(c(ds_input(),
-                         input$x, input$y,
-                         input$col, input$facet,
-                         input$alpha, input$size))
-
             list(
               df = janitor::clean_names(ds_input()),
               x_var = input$x,
@@ -147,11 +142,6 @@ mod_cols_server <- function(id, ds_input) {
               alpha = input$alpha,
               size = input$size)
             }) |>
-          # bind to cache
-          shiny::bindCache(c(ds_input(),
-                             input$x, input$y,
-                             input$col, input$facet,
-                             input$alpha, input$size)) |>
           # bind to event
           shiny::bindEvent(c(ds_input(),
                              input$x, input$y,

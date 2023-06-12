@@ -30,14 +30,14 @@ mod_plot_ui <- function(id) {
 #'
 #' @importFrom shiny NS moduleServer reactive renderPrint
 #' @importFrom shiny renderPlot isolate bindEvent req
-#' @importFrom stringr str_replace_all
 #' @importFrom ggplot2 labs theme_minimal theme
 mod_plot_server <- function(id, plot_inputs) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
-       plot <- shiny::reactive({
-                gg_color_scatter_facet(
+       shiny::observe({
+           output$graph <- shiny::renderPlot({
+              gg_color_scatter_facet(
                   df = plot_inputs()$df,
                   x_var = plot_inputs()$x_var,
                   y_var = plot_inputs()$y_var,
@@ -45,14 +45,9 @@ mod_plot_server <- function(id, plot_inputs) {
                   facet_var = plot_inputs()$facet_var,
                   alpha = plot_inputs()$alpha,
                   size = plot_inputs()$size)
-          }) |>
-            shiny::bindEvent(plot_inputs(),
-                             ignoreNULL = TRUE)
-
-       shiny::observe({
-           output$graph <- shiny::renderPlot({ plot() })
+             })
        }) |>
-          shiny::bindEvent(plot(),
+          shiny::bindEvent(plot_inputs(),
                            ignoreNULL = TRUE,
                            ignoreInit = TRUE)
 
