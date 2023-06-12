@@ -5,4 +5,4 @@ pkgload::load_all(
   attach_testthat = TRUE)
 library(tsap)
 tsap::pkgDataApp()
-# rsconnect::deployApp()
+rsconnect::deployApp()

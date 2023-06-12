@@ -48,8 +48,7 @@ mod_plot_server <- function(id, plot_inputs) {
              })
        }) |>
           shiny::bindEvent(plot_inputs(),
-                           ignoreNULL = TRUE,
-                           ignoreInit = TRUE)
+                           ignoreNULL = TRUE)
 
   })
 }
