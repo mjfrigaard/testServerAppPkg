@@ -22,7 +22,7 @@ Make x, y, color plot title
 \examples{
 diamonds <- ggplot2::diamonds
 mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
-gg_color_scatter(
+gg_scatter_color(
   df = mini_dmnds,
   x_var = "carat",
   y_var = "price",

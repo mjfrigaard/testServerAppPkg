@@ -37,7 +37,7 @@ mod_plot_server <- function(id, plot_inputs) {
 
        shiny::observe({
            output$graph <- shiny::renderPlot({
-              gg_color_scatter_facet(
+              gg_scatter_color_facet(
                   df = plot_inputs()$df,
                   x_var = plot_inputs()$x_var,
                   y_var = plot_inputs()$y_var,
