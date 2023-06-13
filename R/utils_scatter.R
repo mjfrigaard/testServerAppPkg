@@ -447,6 +447,7 @@ gg_scatter_color_facet <- function(df, x_var, y_var,
 gg_color_scatter_facet <- function(df, x_var, y_var,
                                 col_var = NULL, facet_var = NULL,
                                 ...) {
+  # browser()
   # missing both color and facet vars
   if (is.null(col_var) & is.null(facet_var)) {
       ggplot2::ggplot(
@@ -558,16 +559,15 @@ gg_color_scatter_facet <- function(df, x_var, y_var,
   }
 }
 
-# debug gg_color_scatter_facet ----------------------------------
 
-# diamonds <- ggplot2::diamonds
-# mini_dmnds <- diamonds[sample(nrow(diamonds), 10000), ]
+# debug gg_color_scatter_facet() ------------------------------------------
+# plot_inputs <- get_plot_inputs_list(pkg = "palmerpenguins", ds = "penguins")
 # gg_color_scatter_facet(
-#   df = mini_dmnds,
-#   x_var = "carat",
-#   y_var = "price",
-#   col_var = NULL,
-#   facet_var = "cut",
-#   alpha = 1 / 3,
-#   size = 2
+#   df = plot_inputs$df,
+#   x_var = plot_inputs$x_var,
+#   y_var = plot_inputs$y_var,
+#   col_var = plot_inputs$col_var,
+#   facet_var = plot_inputs$facet_var,
+#   alpha = plot_inputs$alpha,
+#   size = plot_inputs$size
 # )
