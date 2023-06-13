@@ -10,6 +10,8 @@
 #' @examples
 #' get_plot_inputs_list(pkg = "palmerpenguins", ds = "penguins")
 get_plot_inputs_list <- function(pkg, ds) {
+    require(palmerpenguins)
+    require(NHANES)
     # get packages with data.frames/tibbles
     all_pkgs <- get_pkgs_with_dfs()
     # select package
