@@ -447,7 +447,7 @@ gg_scatter_color_facet <- function(df, x_var, y_var,
 gg_color_scatter_facet <- function(df, x_var, y_var,
                                 col_var = NULL, facet_var = NULL,
                                 ...) {
-  browser()
+  # browser()
   # missing both color and facet vars
   if (is.null(col_var) & is.null(facet_var)) {
       ggplot2::ggplot(
@@ -565,14 +565,29 @@ gg_color_scatter_facet <- function(df, x_var, y_var,
 
 
 # # debug gg_color_scatter_facet() ------------------------------------------
-plot_inputs <- get_plot_inputs_list(pkg = "palmerpenguins", ds = "penguins")
-plot <- gg_color_scatter_facet(
-  df = plot_inputs$df,
-  x_var = plot_inputs$x_var,
-  y_var = plot_inputs$y_var,
-  col_var = plot_inputs$col_var,
-  facet_var = plot_inputs$facet_var,
-  alpha = plot_inputs$alpha,
-  size = plot_inputs$size
-)
-print(plot)
+# plot_inputs <- get_plot_inputs_list(pkg = "palmerpenguins", ds = "penguins")
+# facet_var <- c(race1 = "race1")
+# col_var <- c(survey_yr = "survey_yr")
+# plot <- gg_color_scatter_facet(
+#   df = plot_inputs$df,
+#   x_var = plot_inputs$x_var,
+#   y_var = plot_inputs$y_var,
+#   col_var = plot_inputs$col_var,
+#   facet_var = plot_inputs$facet_var,
+#   alpha = plot_inputs$alpha,
+#   size = plot_inputs$size
+# )
+# print(plot)
+#
+# facet_var <- c(race1 = "race1")
+# col_var <- c(survey_yr = "survey_yr")
+# plot_inputs$facet_var <- facet_var
+# plot_inputs$col_var <- col_var
+# gg_color_scatter_facet(
+#       df = plot_inputs$df,
+#       x_var = plot_inputs$x_var,
+#       y_var = plot_inputs$y_var,
+#       col_var = plot_inputs$col_var,
+#       facet_var = plot_inputs$facet_var,
+#       size = plot_inputs$size,
+#       alpha = plot_inputs$alpha)
