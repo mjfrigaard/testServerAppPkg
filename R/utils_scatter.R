@@ -447,7 +447,7 @@ gg_scatter_color_facet <- function(df, x_var, y_var,
 gg_color_scatter_facet <- function(df, x_var, y_var,
                                 col_var = NULL, facet_var = NULL,
                                 ...) {
-  # browser()
+  browser()
   # missing both color and facet vars
   if (is.null(col_var) & is.null(facet_var)) {
       ggplot2::ggplot(
@@ -522,24 +522,28 @@ gg_color_scatter_facet <- function(df, x_var, y_var,
 
   } else {
 
-      # missing both color and facet vars
+      # has both color and facet vars
       ggplot2::ggplot(
         data = df,
-        mapping = ggplot2::aes(x = .data[[x_var]], y = .data[[y_var]])
+        mapping = ggplot2::aes(
+          x = .data[[x_var]],
+          y = .data[[y_var]])
       ) +
         # points layer
         # add ... for alpha and size passed to points
         ggplot2::geom_point(
-          ggplot2::aes(colour = .data[[col_var]], group = .data[[col_var]]), ...
+          ggplot2::aes(
+            colour = .data[[col_var]],
+            group = .data[[col_var]]), ...
         ) +
         # add facet layer
         ggplot2::facet_wrap(ggplot2::vars(.data[[facet_var]])) +
         # add labels
-        ggplot2::labs(
-          title = make_x_y_col_facet_title(
-            x = x_var, y = y_var,
-            color = col_var, facets = facet_var
-          ),
+        ggplot2::labs(title =
+            make_x_y_col_facet_title(x = x_var,
+                                     y = y_var,
+                                     color = col_var,
+                                     facets = facet_var),
           x = stringr::str_replace_all(
             snakecase::to_title_case(x_var), "_", " "
           ),
@@ -560,14 +564,15 @@ gg_color_scatter_facet <- function(df, x_var, y_var,
 }
 
 
-# debug gg_color_scatter_facet() ------------------------------------------
-# plot_inputs <- get_plot_inputs_list(pkg = "palmerpenguins", ds = "penguins")
-# gg_color_scatter_facet(
-#   df = plot_inputs$df,
-#   x_var = plot_inputs$x_var,
-#   y_var = plot_inputs$y_var,
-#   col_var = plot_inputs$col_var,
-#   facet_var = plot_inputs$facet_var,
-#   alpha = plot_inputs$alpha,
-#   size = plot_inputs$size
-# )
+# # debug gg_color_scatter_facet() ------------------------------------------
+plot_inputs <- get_plot_inputs_list(pkg = "palmerpenguins", ds = "penguins")
+plot <- gg_color_scatter_facet(
+  df = plot_inputs$df,
+  x_var = plot_inputs$x_var,
+  y_var = plot_inputs$y_var,
+  col_var = plot_inputs$col_var,
+  facet_var = plot_inputs$facet_var,
+  alpha = plot_inputs$alpha,
+  size = plot_inputs$size
+)
+print(plot)
