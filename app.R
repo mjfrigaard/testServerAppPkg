@@ -6,4 +6,4 @@ pkgload::load_all(
 library(tsap)
 # options(shiny.fullstacktrace = TRUE)
 tsap::pkgDataApp()
-rsconnect::deployApp()
+# rsconnect::deployApp()
