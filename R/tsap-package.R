@@ -11,6 +11,7 @@
 #' @import palmerpenguins
 #' @import dplyr
 #' @import janitor
+#' @import rlang
 #' @importFrom rsconnect deployApp
 #'
 #'

@@ -562,3 +562,28 @@ gg_color_scatter_facet <- function(df, x_var, y_var,
 
   }
 }
+
+
+# # debug gg_color_scatter_facet --------------------------------------------
+# plot_values_test <- list(
+#   # data from palmerpenguins::penguins
+#   df = janitor::clean_names(palmerpenguins::penguins),
+#   # columns from NHANES::NHANES
+#   x_var = "poverty",
+#   y_var = "weight",
+#   col_var = "survey_yr",
+#   facet_var = "race1",
+#   size = 2L,
+#   alpha = 0.75
+# )
+#
+# plot <- gg_color_scatter_facet(
+#   df = plot_values_test$df,
+#   x_var = plot_values_test$x_var,
+#   y_var = plot_values_test$y_var,
+#   col_var = plot_values_test$col_var,
+#   facet_var = plot_values_test$facet_var,
+#   alpha = plot_values_test$alpha,
+#   size = plot_values_test$size
+# )
+# print(plot)

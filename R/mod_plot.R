@@ -22,8 +22,7 @@ mod_plot_ui <- function(id) {
 #' Plot server module
 #'
 #' @param id module id
-#' @param cols columns from `mod_cols`
-#' @param df `data.frame` from `mod_ds`
+#' @param plot_inputs list from `mod_cols`
 #'
 #' @return shiny server module
 #' @export mod_plot_server
@@ -37,7 +36,7 @@ mod_plot_server <- function(id, plot_inputs) {
 
        shiny::observe({
            output$graph <- shiny::renderPlot({
-              gg_scatter_color_facet(
+              gg_color_scatter_facet(
                   df = plot_inputs()$df,
                   x_var = plot_inputs()$x_var,
                   y_var = plot_inputs()$y_var,

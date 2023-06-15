@@ -84,7 +84,8 @@ Check the shiny `testServer()` tests for the modules in
     #> ├── test-mod_cols_server.R
     #> ├── test-mod_ds_server.R
     #> ├── test-mod_pkg_server.R
-    #> └── test-mod_plot_server.R
+    #> ├── test-mod_plot_server.R
+    #> └── test-mod_plot_server_alt.R
 
 ``` r
 # run module function tests -----------------------------------------------

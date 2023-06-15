@@ -10,10 +10,14 @@ appServer <- function(input, output, session) {
   # dataset module ----
   dataset <- mod_ds_server("ds", pkg_input = pkg)
 
-  # column select module ----
-  plot_values <- mod_cols_server(id = "cols", ds_input = dataset)
+  # # column module ----
+  # plot_values <- mod_cols_server(id = "cols", ds_input = dataset)
+  # # plot module ----
+  # mod_plot_server("plot", plot_inputs = plot_values)
 
-  # plot module ----
-  mod_plot_server("plot", plot_inputs = plot_values)
+  # # variables module ----
+  graph_values <- mod_vars_server(id = "vars", ds_input = dataset)
+  # graph module ----
+  mod_graph_server("graph", graph_inputs = graph_values)
 
 }

@@ -9,9 +9,7 @@ mod_plot_server(id, plot_inputs)
 \arguments{
 \item{id}{module id}
 
-\item{cols}{columns from \code{mod_cols}}
-
-\item{df}{\code{data.frame} from \code{mod_ds}}
+\item{plot_inputs}{list from \code{mod_cols}}
 }
 \value{
 shiny server module

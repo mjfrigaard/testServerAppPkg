@@ -21,10 +21,12 @@ appUI <- function() {
           shiny::tags$br(),
           # column inputs ----
           # shiny::h4(shiny::code("column select"), " module"),
-          mod_cols_ui(id = "cols"),
+          # mod_cols_ui(id = "cols"),
+          mod_vars_ui(id = "vars"),
           # plot outputs  ----
           # shiny::h4(shiny::code("scatter plot"), " module"),
-          mod_plot_ui("plot")
+          # mod_plot_ui("plot")
+          mod_graph_ui("graph")
         )
       )
     )
