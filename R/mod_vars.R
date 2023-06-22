@@ -35,7 +35,7 @@ mod_vars_ui <- function(id) {
         ),
         shiny::selectInput(
           inputId = ns("facet"),
-          label = "Facet variable:",
+          label = "Group variable:",
           choices = NULL
         )
       )
@@ -55,7 +55,7 @@ mod_vars_ui <- function(id) {
 #' @param id module id
 #' @param ds_input pkg data from
 #'
-#' @section Returned object (`ds_input`):
+#' @section Returned object (`graph_values`):
 #'
 #' The returned object passed to `ds_input` is the result of:
 #'
@@ -63,8 +63,8 @@ mod_vars_ui <- function(id) {
 #' get(x = input$dataset, pos = paste0("package:", pkg_input()))
 #' ```
 #'
-#' * Where `pkg_input()` is the return value from `mod_pkg_server()`, and
-#' `input$dataset` is the reactive value from `mod_ds_server()`
+#' * The `ds_input` is converted to `pkg_data()` and used to populate the
+#' `selectInput()`s for the `x`, `y`, `color`, and `facet` inputs.
 #'
 #'
 #' @return shiny server module
@@ -132,7 +132,6 @@ mod_vars_server <- function(id, ds_input) {
       )
 
     df_vars <- shiny::reactive({
-      # shiny::req(c(input$x, input$y, input$col, input$facet))
       cols <- c(input$x, input$y, input$col, input$facet)
       if (sum(cols %in% names(pkg_data())) == 4) {
         dplyr::select(

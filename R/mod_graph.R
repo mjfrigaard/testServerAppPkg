@@ -47,7 +47,7 @@ mod_graph_ui <- function(id) {
 #' Plot server module
 #'
 #' @param id module id
-#' @param graph_inputs a `data.frame` from `mod_vars`
+#' @param graph_data a `data.frame` from `mod_vars`
 #'
 #' @return shiny server module
 #' @export mod_graph_server
@@ -55,29 +55,29 @@ mod_graph_ui <- function(id) {
 #' @importFrom shiny NS moduleServer reactive renderPrint
 #' @importFrom shiny renderPlot isolate bindEvent req
 #' @importFrom ggplot2 labs theme_minimal theme
-mod_graph_server <- function(id, graph_inputs) {
+mod_graph_server <- function(id, graph_data) {
 
   shiny::moduleServer(id, function(input, output, session) {
 
         output$vals <- shiny::renderPrint({
             c(input$alpha, input$size)
            }) |>
-          shiny::bindEvent(graph_inputs(),
+          shiny::bindEvent(graph_data(),
                            ignoreNULL = TRUE)
 
           shiny::observe({
               output$graph <- shiny::renderPlot({
                  gg_scatter_color_facet(
-                     df = graph_inputs(),
-                     x_var = names(graph_inputs())[1],
-                     y_var = names(graph_inputs())[2],
-                     col_var = names(graph_inputs())[3],
-                     facet_var = names(graph_inputs())[4],
+                     df = graph_data(),
+                     x_var = names(graph_data())[1],
+                     y_var = names(graph_data())[2],
+                     col_var = names(graph_data())[3],
+                     facet_var = names(graph_data())[4],
                      alpha = input$alpha,
                      size = input$size)
                 })
               }) |>
-             shiny::bindEvent(graph_inputs(),
+             shiny::bindEvent(graph_data(),
                               input$alpha, input$size,
                               ignoreNULL = TRUE)
 

@@ -17,7 +17,7 @@ shiny server module
 \description{
 Select variables Server module
 }
-\section{Returned object (\code{ds_input})}{
+\section{Returned object (\code{graph_values})}{
 
 
 The returned object passed to \code{ds_input} is the result of:
@@ -25,8 +25,8 @@ The returned object passed to \code{ds_input} is the result of:
 \if{html}{\out{<div class="sourceCode">}}\preformatted{get(x = input$dataset, pos = paste0("package:", pkg_input()))
 }\if{html}{\out{</div>}}
 \itemize{
-\item Where \code{pkg_input()} is the return value from \code{mod_pkg_server()}, and
-\code{input$dataset} is the reactive value from \code{mod_ds_server()}
+\item The \code{ds_input} is converted to \code{pkg_data()} and used to populate the
+\code{selectInput()}s for the \code{x}, \code{y}, \code{color}, and \code{facet} inputs.
 }
 }
 

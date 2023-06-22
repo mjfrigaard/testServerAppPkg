@@ -15,9 +15,9 @@ appServer <- function(input, output, session) {
   # # plot module ----
   # mod_plot_server("plot", plot_inputs = plot_values)
 
-  # # variables module ----
-  graph_values <- mod_vars_server(id = "vars", ds_input = dataset)
+  # variables module ----
+  vars_data <- mod_vars_server(id = "vars", ds_input = dataset)
   # graph module ----
-  mod_graph_server("graph", graph_inputs = graph_values)
+  mod_graph_server("graph", graph_data = vars_data)
 
 }

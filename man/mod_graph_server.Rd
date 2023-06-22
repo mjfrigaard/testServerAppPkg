@@ -4,12 +4,12 @@
 \alias{mod_graph_server}
 \title{Plot server module}
 \usage{
-mod_graph_server(id, graph_inputs)
+mod_graph_server(id, graph_data)
 }
 \arguments{
 \item{id}{module id}
 
-\item{graph_inputs}{a \code{data.frame} from \code{mod_vars}}
+\item{graph_data}{a \code{data.frame} from \code{mod_vars}}
 }
 \value{
 shiny server module
