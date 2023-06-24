@@ -338,8 +338,7 @@ make_facet_vec <- function(df, type) {
 #' @param df a `data.frame` or `tibble`
 #'
 #'
-#' @return a named character vector of factor or character column names with
-#' < 5 unique levels
+#' @return a named character vector or column from with < 5 unique levels
 #' @export pull_facet_cols
 #'
 #' @importFrom purrr compact list_c
