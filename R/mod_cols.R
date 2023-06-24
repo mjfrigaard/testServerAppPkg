@@ -89,6 +89,8 @@ mod_cols_ui <- function(id) {
 #'
 mod_cols_server <- function(id, ds_input) {
 
+  stopifnot(is.reactive(ds_input))
+
   shiny::moduleServer(id, function(input, output, session) {
 
     pkg_data <- shiny::reactive({

@@ -32,6 +32,8 @@ mod_plot_ui <- function(id) {
 #' @importFrom ggplot2 labs theme_minimal theme
 mod_plot_server <- function(id, plot_inputs) {
 
+  stopifnot(is.reactive(plot_inputs))
+
   shiny::moduleServer(id, function(input, output, session) {
 
        shiny::observe({

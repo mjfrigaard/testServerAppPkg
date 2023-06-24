@@ -1,4 +1,4 @@
-col_types_test <- tibble::tibble(
+col_classes <- tibble::tibble(
   log_na = log_maker(size = 10, missing = TRUE),
   log_var = log_maker(size = 10),
   int_na = int_maker(size = 10, missing = TRUE),
@@ -13,6 +13,6 @@ col_types_test <- tibble::tibble(
   ord_fct = ord_maker(size = 10, lvls = 5)
 )
 # export to tests/testthat/fixtures/
-saveRDS(col_types_test,
-  file = "tests/testthat/fixtures/col_types_test.rds"
+saveRDS(col_classes,
+  file = "tests/testthat/fixtures/col_classes.rds"
 )

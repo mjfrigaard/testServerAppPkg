@@ -1,31 +1,27 @@
 shiny::testServer(mod_pkg_server, {
-  # Test 1: check initial value -----
-  testthat::expect_equal(input$pkg, NULL)
-  cat("\nTest 1 initial pkg = NULL: >>", is.null(input$pkg), "\n")
 
-  # Test 2 change pkg = 'palmerpenguins': ----
+  testthat::expect_equal(input$pkg, NULL)
+  tscmt("mod_pkg_server", "initial pkg = NULL")
+
   session$setInputs(pkg = "palmerpenguins")
   testthat::expect_equal(
     object = input$pkg,
     expected = "palmerpenguins")
-  cat("\nTest 2 change pkg = 'palmerpenguins' >> ", input$pkg, "\n")
+  tscmt("mod_pkg_server", "change pkg = palmerpenguins")
 
-  # Test 3 change pkg: 'NHANES' = ----
   session$setInputs(pkg = "NHANES")
   testthat::expect_equal(
     object = input$pkg,
     expected = "NHANES")
-  cat("\nTest 3 change pkg = 'NHANES' >>", input$pkg, "\n")
+  tscmt("mod_pkg_server", "change pkg = NHANES")
 
-  # Test 4: check class of returned values ----
   session$setInputs(pkg = "palmerpenguins")
   testthat::expect_true(
     object = is.character(session$returned()))
-  cat("\nTest 4 is.character() >>", is.character(session$returned()), "\n")
+  tscmt("mod_pkg_server", "is.character")
 
-  # Test 5: check return value ----
   session$setInputs(pkg = "NHANES")
   expect_equal(object = session$returned(),
     expected = "NHANES")
-  cat("\nTest 5 session$returned() = 'NHANES' >>", session$returned())
+  tscmt("mod_pkg_server", "returned")
 })

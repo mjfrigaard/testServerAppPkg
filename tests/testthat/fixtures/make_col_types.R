@@ -1,4 +1,4 @@
-pull_cols_test <- tibble::tibble(
+col_types <- tibble::tibble(
 
   # double ----
   dbl_var_na = dbl_maker(10, missing = TRUE),
@@ -94,6 +94,6 @@ pull_cols_test <- tibble::tibble(
 )
 
 # export to tests/testthat/fixtures/
-saveRDS(pull_cols_test,
-  file = "tests/testthat/fixtures/pull_cols_test.rds"
+saveRDS(col_types,
+  file = "tests/testthat/fixtures/col_types.rds"
 )

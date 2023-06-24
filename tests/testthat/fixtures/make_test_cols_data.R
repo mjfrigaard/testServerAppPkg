@@ -1,4 +1,4 @@
-testdata_col_class <- tibble::tibble(
+test_col_data <- tibble::tibble(
  log_var = c(TRUE, FALSE, TRUE),
  int_var = c(1L, 2L, 3L),
  dbl_var = c(1.1, 2.2, 3.3),
@@ -15,4 +15,4 @@ testdata_col_class <- tibble::tibble(
    log_vec = c(TRUE, FALSE),
    dbl_vec = c(1.1, 2.2),
    chr_var = c("item:1", "item:2")))
-saveRDS(object = testdata_col_class, "tests/testthat/fixtures/testdata_col_class.rds")
+saveRDS(object = test_col_data, "tests/testthat/fixtures/test_col_data.rds")

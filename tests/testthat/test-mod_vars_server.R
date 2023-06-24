@@ -1,39 +1,36 @@
+require(dplyr)
+require(tibble)
+
+# create test data
+test_data <- tibble::tibble(
+               LOG = log_maker(size = 6),
+               INT = int_maker(size = 6),
+               DBL = dbl_maker(size = 6),
+               CHR = chr_maker(size = 6, lvls = 4),
+               FCT = fct_maker(size = 6, lvls = 4),
+               ORD = ord_maker(size = 6, lvls = 4))
+
 shiny::testServer(mod_vars_server,
-  args = list(ds_input = reactive(palmerpenguins::penguins)), expr = {
-    testthat::expect_equal(
-      object = pkg_data(),
-      expected = janitor::clean_names(palmerpenguins::penguins))
-    cat("\nTest 1 pkg_data() = clean_names(palmerpenguins::penguins) \n")
+  args = list(ds_input = reactive(test_data)), expr = {
+  testthat::expect_true(object = is.data.frame(pkg_data()))
+  cat("\nTest 1 is.data.frame(pkg_data()) >>", is.data.frame(pkg_data()))
 
-    testthat::expect_equal(
-      object = pull_numeric_cols(df = pkg_data()),
-      expected = c(bill_length_mm = "bill_length_mm",
-                   bill_depth_mm = "bill_depth_mm",
-                   flipper_length_mm = "flipper_length_mm",
-                   body_mass_g = "body_mass_g",
-                   year = "year"))
-    cat("\nTest 2 pull_numeric_cols(pkg_data()) \n")
+  testthat::expect_equal(
+    object = pull_numeric_cols(df = pkg_data()),
+    expected = setNames(nm = c("dbl", "int")))
+cat("\nTest 2 numeric = dbl, int >>", pull_numeric_cols(pkg_data()))
 
-    testthat::expect_equal(
-      object = pull_binary_cols(df = pkg_data()),
-      expected = c(sex = "sex"))
-    cat("\nTest 3 pull_binary_cols(pkg_data()) \n")
+  testthat::expect_equal(
+    object = pull_binary_cols(df = pkg_data()),
+    expected = setNames(nm = c("log")))
+cat("\nTest 3 binary = log >>", pull_binary_cols(pkg_data()))
 
-    testthat::expect_equal(
-      object = pull_facet_cols(df = pkg_data()),
-      expected = c(species = "species", island = "island"))
-    cat("\nTest 4 pull_facet_cols(pkg_data()) \n")
+  testthat::expect_equal(
+    object = pull_facet_cols(df = pkg_data()),
+    expected = setNames(nm = c("chr", "fct", "ord")))
+cat("\nTest 4 facet = chr, fct, ord >>", pull_facet_cols(pkg_data()))
+
 })
-
-# shiny::testServer(mod_vars_server,
-#   args = list(reactive(palmerpenguins::penguins)), expr = {
-#     # Test 1: pkg_data() = clean_names(palmerpenguins::penguins) -----
-#     testthat::expect_equal(
-#       object = pkg_data(),
-#       expected = janitor::clean_names(palmerpenguins::penguins))
-#     cat("\nTest 1 pkg_data() = clean_names(palmerpenguins::penguins) \n")
-# })
-
 
 
 # })

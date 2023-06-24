@@ -1,3 +1,7 @@
+tscmt <- function(test, msg) {
+  cat("\n", glue::glue("  {test}: {msg}"), "\n")
+}
+
 log_maker <- function(size, missing = FALSE) {
   if (size <= 2 & isTRUE(missing)) {
     as.vector(c(TRUE, NA), mode = "logical")
